@@ -1,0 +1,68 @@
+<script src="node_modules/chart.js/dist/Chart.min.js"></script>
+
+<canvas id="myChart" style="width:20%;height:30vh"></canvas>
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Nutrition","Condition corporelle","Test", "ok"],
+            datasets: [{
+                label: 'Niveau de participation',
+                data: [2, 8, -1, 5],
+                backgroundColor: [
+                    'grey',
+                    'grey',
+                    'grey',
+                    'grey',
+                ],
+                borderColor: [
+                    'grey',
+                    'grey',
+                    'grey',
+                    'grey',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+
+    var dataset = myChart.data.datasets[0];
+    for(let i=0; i<dataset.data.length;i++)
+    {
+        console.log(dataset.data[i]);
+        if(dataset.data[i]<0)
+        {
+            dataset.backgroundColor[i] = "grey";
+            dataset.borderColor[i] = "grey";
+        }
+        else if(dataset.data[i]<4)
+        {
+            dataset.backgroundColor[i] = "red";
+            dataset.borderColor[i] = "red";
+        }
+        else if(dataset.data[i]<7)
+        {
+            dataset.backgroundColor[i] = "orange";
+            dataset.borderColor[i] = "orange";
+        }
+        else
+        {
+            dataset.backgroundColor[i] = "green";
+            dataset.borderColor[i] = "green";
+        }
+    }
+    // console.log(myChart.data.datasets[0]);
+    // console.log(myChart.data.datasets[0].data);
+    // console.log(myChart.data.datasets[0].backgroundColor);
+    // console.log(myChart.data.[datasets0].borderColor);
+</script>
