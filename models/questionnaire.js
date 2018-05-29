@@ -1,11 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Questionnaire = sequelize.define('Questionnaire', {
-        id: {type:DataTypes.STRING, primaryKey: true},
-        code: DataTypes.STRING,
+        id: {type:DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+        code: {type:DataTypes.STRING, unique: true},
         date: DataTypes.DATE,
-        last_question: DataTypes.INTEGER,
-        finished: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
+        last_question: {type: DataTypes.INTEGER, defaultValue: 1},
+        finished: {type: DataTypes.BOOLEAN, defaultValue: false}
     }, {
         tableName: 'questionnaire',
         timestamps: false
