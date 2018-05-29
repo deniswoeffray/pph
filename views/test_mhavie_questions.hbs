@@ -12,8 +12,58 @@
     <title>{{title}}</title>
 
 </head>
-<body>
-<h1>{{title}} - {{code}}</h1>
+<body class="container">
+<h5>{{code}}</h5>
+<h4>{{question.Categorie.name}}</h4>
+<h2>{{question.question}}</h2>
+<p>{{question.description}}</p>
+<pre>obligatoire:{{question.obligatoire}}</pre>
+<div class="row">
+    <div class="col">
+        <p><b>Réalisation</b></p>
+        <input name="realisation" id="sansDiff" type="radio" value="">
+        <label for="sansDiff">Sans difficulté</label><br>
+
+        <input name="realisation" id="avecDiff" type="radio" value="">
+        <label for="avecDiff">Avec difficulté</label><br>
+
+        <input name="realisation" id="realParSubs" type="radio" value="">
+        <label for="realParSubs">Réalisé par substitution</label><br>
+
+        <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="nonReal" type="radio" value="">
+        <label for="nonReal">Non réalisé</label><br>
+
+        <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="na" type="radio" value="">
+        <label for="na">Ne s'applique pas</label><br>
+
+    </div>
+    <div class="col">
+        <p><b>Type d'aide</b></p>
+        <input  id="sansAide" type="checkbox" value="">
+        <label for="sansAide">Sans aide</label><br>
+
+        <input  id="aideTech" type="checkbox" value="">
+        <label for="aideTech">Aide technique</label><br>
+
+        <input  id="amenagement" type="checkbox" value="">
+        <label for="amenagement">Aménagement</label><br>
+
+        <input  id="aideHumaine" type="checkbox" value="">
+        <label for="aideHumaine">Aide humaine</label><br>
+    </div>
+    <div class="col">
+        <p><b>Satisfaction</b></p>
+        <input name="satisfaction" id="insatisfait" type="radio" value="">
+        <label for="insatisfait">Insatisfait</label><br>
+
+        <input name="satisfaction" id="plusOuMoins" type="radio" value="">
+        <label for="plusOuMoins">+/- satisfait</label><br>
+
+        <input name="satisfaction" id="satisfait" type="radio" value="">
+        <label for="satisfait">Satisfait</label><br>
+    </div>
+</div>
+
 
 
 <!-- Optional JavaScript -->

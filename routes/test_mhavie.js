@@ -4,13 +4,17 @@ var models = require('../models');
 /* GET home page. */
 router.get('/:code', function (req, res, next) {
     var code = req.params.code;
-    models.Questionnaire.findOne({where: {code: code}}).then(function (i) {
-        console.log(i);
-        if(i === null)
+    models.Questionnaire.findOne({where: {code: code}}).then(function (questionnaire) {
+        if(questionnaire === null)
         {
             res.render('index', {title: 'Test', msg: "Le test "+code+" n'existe pas"})
         }
-        res.render('test_mhavie_questions', {title: 'Test', code: code+"..."})
+        questionnaire = questionnaire.dataValues;
+        models.Question.findOne({where:{id:questionnaire.last_question}, include: [models.Categorie]}).then(function (question) {
+
+            res.render('test_mhavie_questions', {title: 'Test', code: code, question:question});
+
+        })
     })
 });
 

@@ -1,4 +1,5 @@
 'use strict';
+var Reponse = require('../models/reponse');
 module.exports = (sequelize, DataTypes) => {
     const Questionnaire = sequelize.define('Questionnaire', {
         id: {type:DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -10,5 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'questionnaire',
         timestamps: false
     });
+
+
     return Questionnaire
 };
