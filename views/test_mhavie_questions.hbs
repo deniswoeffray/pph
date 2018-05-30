@@ -20,7 +20,7 @@
 <body class="container">
 <h5>{{code}}</h5>
 <h4>{{question.Categorie.name}}</h4>
-<h2>{{question.question}}</h2>
+<h2>{{question.number}}. {{question.question}}</h2>
 <p>{{question.description}}</p>
 <pre>obligatoire:{{question.obligatoire}}</pre>
 <pre>value: <span id="value"></span></pre>
@@ -70,6 +70,15 @@
         <label for="satisfait">Satisfait</label><br>
     </div>
 </div>
+<div>
+    <form action="/test/{{code}}/{{question.number}}" method="post">
+        <input id="valueInput" name="valueInput" type="hidden" value="">
+        <input id="satisfactionInput" name="satisfactionInput" type="hidden" value="">
+        <button id="prev" type="submit" name="next" value="-1">Précédent</button>
+        <button type="submit" name="next" value="1" id="next">Suivant</button>
+    </form>
+
+</div>
 
 <script>
 
@@ -79,6 +88,7 @@
     $("[name='satisfaction']").click(function () {
         satisfaction = $("[name='satisfaction']:checked").val();
         $('#satisfaction').html(satisfaction);
+        $('#satisfactionInput').val(satisfaction);
     });
 
 
@@ -126,9 +136,11 @@
         }
 
         $('#value').html(value);
+        $('#valueInput').val(value);
     });
-</script>
 
+
+</script>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
