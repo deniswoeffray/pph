@@ -50,10 +50,9 @@
         <label for="sansAide">Sans aide</label><br>
 
         <input id="aideTech" type="checkbox" value="">
-        <label for="aideTech">Aide technique</label><br>
+        <label for="aideTech">Aide technique ou aménagement</label><br>
 
-        <input id="amenagement" type="checkbox" value="">
-        <label for="amenagement">Aménagement</label><br>
+
 
         <input id="aideHumaine" type="checkbox" value="">
         <label for="aideHumaine">Aide humaine</label><br>
@@ -81,14 +80,38 @@
 </div>
 
 <script>
+    var value = -2;
+    var satisfaction = -2;
+    $('#satisfactionInput').val(satisfaction);
+    $('#valueInput').val(value);
 
-    var value;
-    var satisfaction;
 
     $("[name='satisfaction']").click(function () {
         satisfaction = $("[name='satisfaction']:checked").val();
         $('#satisfaction').html(satisfaction);
         $('#satisfactionInput').val(satisfaction);
+    });
+
+    $("#sansAide").click(function () {
+        if($(this).is(":checked"))
+        {
+            $('#aideTech').prop('checked',false);
+            $('#aideHumaine').prop('checked',false);
+        }
+    });
+
+    $("#aideTech").click(function () {
+        if($(this).is(":checked"))
+        {
+            $('#sansAide').prop('checked',false);
+        }
+    });
+
+    $("#aideHumaine").click(function () {
+        if($(this).is(":checked"))
+        {
+            $('#sansAide').prop('checked',false);
+        }
     });
 
 
@@ -101,16 +124,13 @@
             $('#aideTech').prop('checked', false);
             $('#aideHumaine').prop('disabled', true);
             $('#aideHumaine').prop('checked', false);
-            $('#amenagement').prop('disabled', true);
-            $('#amenagement').prop('checked', false);
+
             $('#sansAide').prop('disabled', true);
             $('#sansAide').prop('checked', false);
         }
         else {
             $('#aideTech').prop('disabled', false);
             $('#aideHumaine').prop('disabled', false);
-            $('#aideHumaine').prop('disabled', false);
-            $('#amenagement').prop('disabled', false);
             $('#sansAide').prop('disabled', false);
         }
 
@@ -131,16 +151,82 @@
         if ($('#aideHumaine').is(':checked')) {
             value = value - 4;
         }
-        if ($('#aideTech').is(':checked') || $('#amenagement').is(':checked')) {
+        if ($('#aideTech').is(':checked')) {
             value = value - 1;
         }
 
         $('#value').html(value);
         $('#valueInput').val(value);
     });
-
-
 </script>
+
+{{#if reponse}}
+    <script>
+        $('[name="satisfaction"][value="{{reponse.satisfaction}}"]').prop("checked", true);
+        $('[name="satisfaction"][value="{{reponse.satisfaction}}"]').trigger("click");
+
+        value = {{reponse.value}};
+        switch (value)
+        {
+            case -1:
+                $('#na').prop('checked',true);
+                $('#na').trigger('click');
+                break;
+            case 0:
+                $('#nonReal').prop('checked',true);
+                $('#nonReal').trigger('click');
+
+                break;
+            case 1:
+                $('#realParSubs').prop('checked',true);
+                $('#realParSubs').trigger('click');
+
+                break;
+            case 2:
+                $('#avecDiff').prop('checked',true);
+                $('#aideTech').prop('checked',true);
+                $('#aideHumaine').prop('checked',true);
+                $('#avecDiff').trigger('click');
+                break;
+            case 3:
+                $('#avecDiff').prop('checked',true);
+                $('#aideHumaine').prop('checked',true);
+                $('#avecDiff').trigger('click');
+                break;
+            case 4:
+                $('#sansDiff').prop('checked',true);
+                $('#aideTech').prop('checked',true);
+                $('#aideHumaine').prop('checked',true);
+                $('#sansDiff').trigger('click');
+                break;
+            case 5:
+                $('#sansDiff').prop('checked',true);
+                $('#aideHumaine').prop('checked',true);
+                $('#sansDiff').trigger('click');
+                break;
+            case 6:
+                $('#avecDiff').prop('checked',true);
+                $('#aideTech').prop('checked',true);
+                $('#avecDiff').trigger('click');
+                break;
+            case 7:
+                $('#avecDiff').prop('checked',true);
+                $('#sansAide').prop('checked',true);
+                $('#avecDiff').trigger('click');
+                break;
+            case 8:
+                $('#sansDiff').prop('checked',true);
+                $('#aideTech').prop('checked',true);
+                $('#sansDiff').trigger('click');
+                break;
+            case 9:
+                $('#sansDiff').prop('checked',true);
+                $('#sansAide').prop('checked',true);
+                $('#sansDiff').trigger('click');
+                break;
+        }
+    </script>
+{{/if}}
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

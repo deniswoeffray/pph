@@ -13,9 +13,23 @@ router.get('/:code', function (req, res, next) {
             where: {number: questionnaire.last_question},
             include: [models.Categorie]
         }).then(function (question) {
-
-            //TODO récupérer la réponse si elle existe et l'afficher dans la vue test_mhavie_questions
-            res.render('test_mhavie_questions', {title: 'Test', code: code, question: question});
+            models.Reponse.findOne({
+                where: {
+                    questionnaire_id: questionnaire.id,
+                    question_id: question.id
+                }
+            }).then(function (reponse) {
+                console.log(reponse);
+                if(reponse === null)
+                {
+                    res.render('test_mhavie_questions', {title: 'Test', code: code, question: question})
+                }
+                else
+                {
+                    console.log("has reponse");
+                    res.render('test_mhavie_questions', {title: 'Test', code: code, question: question, reponse: reponse.dataValues})
+                }
+            })
 
         })
     })
