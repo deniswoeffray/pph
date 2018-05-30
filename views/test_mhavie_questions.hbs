@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
           integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
     <title>{{title}}</title>
 
 </head>
@@ -18,52 +23,111 @@
 <h2>{{question.question}}</h2>
 <p>{{question.description}}</p>
 <pre>obligatoire:{{question.obligatoire}}</pre>
+<pre>value: <span id="value"></span></pre>
+<pre>satisfaction: <span id="satisfaction"></span></pre>
 <div class="row">
     <div class="col">
         <p><b>Réalisation</b></p>
-        <input name="realisation" id="sansDiff" type="radio" value="">
+        <input name="realisation" id="sansDiff" type="radio" value="9">
         <label for="sansDiff">Sans difficulté</label><br>
 
-        <input name="realisation" id="avecDiff" type="radio" value="">
+        <input name="realisation" id="avecDiff" type="radio" value="7">
         <label for="avecDiff">Avec difficulté</label><br>
 
-        <input name="realisation" id="realParSubs" type="radio" value="">
+        <input name="realisation" id="realParSubs" type="radio" value="1">
         <label for="realParSubs">Réalisé par substitution</label><br>
 
-        <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="nonReal" type="radio" value="">
+        <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="nonReal" type="radio" value="0">
         <label for="nonReal">Non réalisé</label><br>
 
-        <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="na" type="radio" value="">
+        <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="na" type="radio" value="-1">
         <label for="na">Ne s'applique pas</label><br>
 
     </div>
     <div class="col">
         <p><b>Type d'aide</b></p>
-        <input  id="sansAide" type="checkbox" value="">
+        <input id="sansAide" type="checkbox" value="">
         <label for="sansAide">Sans aide</label><br>
 
-        <input  id="aideTech" type="checkbox" value="">
+        <input id="aideTech" type="checkbox" value="">
         <label for="aideTech">Aide technique</label><br>
 
-        <input  id="amenagement" type="checkbox" value="">
+        <input id="amenagement" type="checkbox" value="">
         <label for="amenagement">Aménagement</label><br>
 
-        <input  id="aideHumaine" type="checkbox" value="">
+        <input id="aideHumaine" type="checkbox" value="">
         <label for="aideHumaine">Aide humaine</label><br>
     </div>
     <div class="col">
         <p><b>Satisfaction</b></p>
-        <input name="satisfaction" id="insatisfait" type="radio" value="">
+        <input name="satisfaction" id="insatisfait" type="radio" value="1">
         <label for="insatisfait">Insatisfait</label><br>
 
-        <input name="satisfaction" id="plusOuMoins" type="radio" value="">
+        <input name="satisfaction" id="plusOuMoins" type="radio" value="2">
         <label for="plusOuMoins">+/- satisfait</label><br>
 
-        <input name="satisfaction" id="satisfait" type="radio" value="">
+        <input name="satisfaction" id="satisfait" type="radio" value="3">
         <label for="satisfait">Satisfait</label><br>
     </div>
 </div>
 
+<script>
+
+    var value;
+    var satisfaction;
+
+    $("[name='satisfaction']").click(function () {
+        satisfaction = $("[name='satisfaction']:checked").val();
+        $('#satisfaction').html(satisfaction);
+    });
+
+
+    $("input").click(function () {
+
+        value = $("[name='realisation']:checked").val();
+
+        if ($('#realParSubs').is(':checked') || $('#nonReal').is(':checked') || $('#na').is(':checked')) {
+            $('#aideTech').prop('disabled', true);
+            $('#aideTech').prop('checked', false);
+            $('#aideHumaine').prop('disabled', true);
+            $('#aideHumaine').prop('checked', false);
+            $('#amenagement').prop('disabled', true);
+            $('#amenagement').prop('checked', false);
+            $('#sansAide').prop('disabled', true);
+            $('#sansAide').prop('checked', false);
+        }
+        else {
+            $('#aideTech').prop('disabled', false);
+            $('#aideHumaine').prop('disabled', false);
+            $('#aideHumaine').prop('disabled', false);
+            $('#amenagement').prop('disabled', false);
+            $('#sansAide').prop('disabled', false);
+        }
+
+        if ($('[name="realisation"]:checked').val() < 0) {
+            $('#satisfait').prop('disabled', true);
+            $('#satisfait').prop('checked', false);
+            $('#insatisfait').prop('disabled', true);
+            $('#insatisfait').prop('checked', false);
+            $('#plusOuMoins').prop('disabled', true);
+            $('#plusOuMoins').prop('checked', false);
+        }
+        else {
+            $('#satisfait').prop('disabled', false);
+            $('#insatisfait').prop('disabled', false);
+            $('#plusOuMoins').prop('disabled', false);
+        }
+
+        if ($('#aideHumaine').is(':checked')) {
+            value = value - 4;
+        }
+        if ($('#aideTech').is(':checked') || $('#amenagement').is(':checked')) {
+            value = value - 1;
+        }
+
+        $('#value').html(value);
+    });
+</script>
 
 
 <!-- Optional JavaScript -->
