@@ -4,10 +4,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <base href="/grp13" />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/style.css">
+
 
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -22,9 +23,9 @@
 <h4>{{question.Categorie.name}}</h4>
 <h2>{{question.number}}. {{question.question}}</h2>
 <p>{{question.description}}</p>
-<pre>obligatoire:{{question.obligatoire}}</pre>
-<pre>value: <span id="value"></span></pre>
-<pre>satisfaction: <span id="satisfaction"></span></pre>
+<!--<pre>obligatoire:{{question.obligatoire}}</pre>-->
+<!--<pre>value: <span id="value"></span></pre>-->
+<!--<pre>satisfaction: <span id="satisfaction"></span></pre>-->
 <div class="row">
     <div class="col">
         <p><b>Réalisation</b></p>
@@ -80,45 +81,41 @@
 </div>
 
 <script>
+    //valeur pas défaut si rien répondu
     var value = -2;
     var satisfaction = -2;
-    $('#satisfactionInput').val(satisfaction);
-    $('#valueInput').val(value);
 
-
+    //valeur pas défaut si rien répondu
     $("[name='satisfaction']").click(function () {
         satisfaction = $("[name='satisfaction']:checked").val();
-        $('#satisfaction').html(satisfaction);
-        $('#satisfactionInput').val(satisfaction);
     });
 
+    //si "sans aide" est clické les autres aides sont désactivées
     $("#sansAide").click(function () {
-        if($(this).is(":checked"))
-        {
+        if($(this).is(":checked")) {
             $('#aideTech').prop('checked',false);
             $('#aideHumaine').prop('checked',false);
         }
     });
 
+    //si "aide technique ou aménagement" est clické "sans aide" est désactivées
     $("#aideTech").click(function () {
-        if($(this).is(":checked"))
-        {
+        if($(this).is(":checked")) {
             $('#sansAide').prop('checked',false);
         }
     });
 
+    //si "aide humaine" est clické "sans aides" est désactivées
     $("#aideHumaine").click(function () {
-        if($(this).is(":checked"))
-        {
+        if($(this).is(":checked")) {
             $('#sansAide').prop('checked',false);
         }
     });
-
-
+    //calcul des valeurs au click sur un input
     $("input").click(function () {
-
+        //valeur de base selon réalisation
         value = $("[name='realisation']:checked").val();
-
+        //si "realisé par substitution" ou "non réalisé" ou "non applicable" est clické, le type d'aide est désactivé
         if ($('#realParSubs').is(':checked') || $('#nonReal').is(':checked') || $('#na').is(':checked')) {
             $('#aideTech').prop('disabled', true);
             $('#aideTech').prop('checked', false);
@@ -128,12 +125,13 @@
             $('#sansAide').prop('disabled', true);
             $('#sansAide').prop('checked', false);
         }
+        //sinon le type d'aide est activé
         else {
             $('#aideTech').prop('disabled', false);
             $('#aideHumaine').prop('disabled', false);
             $('#sansAide').prop('disabled', false);
         }
-
+        //si non applicable est clické, la satisfaction est desactivée
         if ($('[name="realisation"]:checked').val() < 0) {
             $('#satisfait').prop('disabled', true);
             $('#satisfait').prop('checked', false);
@@ -142,30 +140,37 @@
             $('#plusOuMoins').prop('disabled', true);
             $('#plusOuMoins').prop('checked', false);
         }
+        //sinon la satisfaction est activée
         else {
             $('#satisfait').prop('disabled', false);
             $('#insatisfait').prop('disabled', false);
             $('#plusOuMoins').prop('disabled', false);
         }
-
+        //si aide humaine est selectionné on enlève 4pt de valeur
         if ($('#aideHumaine').is(':checked')) {
             value = value - 4;
         }
+        //si aide technique ou aménagement est selectionné on enlève 1pt de valeur
         if ($('#aideTech').is(':checked')) {
             value = value - 1;
         }
-
-        $('#value').html(value);
+        //le champ valeur du formulaire (caché) prend la valeur calculée
         $('#valueInput').val(value);
     });
 </script>
 
+<!--Si la réponse est trouvée dans les routes-->
 {{#if reponse}}
     <script>
+        //la satisfaction prend la valeur enregistrée
         $('[name="satisfaction"][value="{{reponse.satisfaction}}"]').prop("checked", true);
+        //génération d'un clic pour calculer les valeurs
         $('[name="satisfaction"][value="{{reponse.satisfaction}}"]').trigger("click");
 
+        //assignation de la valeur enregistrée dans la valeur du formulaire
         value = {{reponse.value}};
+
+        //selon la valeur enregistrée affichage des bonnes coches et trigger de clic pour mettre à jour les valeurs
         switch (value)
         {
             case -1:

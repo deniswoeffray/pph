@@ -42,27 +42,27 @@ INSERT INTO `category` (`id`, `position`, `name`) VALUES
 -- Contenu de la table `question`
 --
 
-INSERT INTO `question` (`id`, `position`, `question`, `description`, `category_id`) VALUES
-(1, 1, 'Préparer vos repas', 'Planification et préparation des repas.', 1),
-(2, 2, 'Prendre vos repas', NULL, 1),
-(3, 1, 'Dormir', NULL, 2),
-(4, 2, 'Maintenir une bonne condition physique et mentale', 'exercices physiques, relaxation, psychothérapie', 2),
-(5, 1, 'Assurer vos soins personnels', 'Hygiène, apparence, soins de santé', 3),
-(6, 2, 'Vous habiller et vous déshabiller', 'vêtements, accessoires, incluant le choix des vêtements', 3),
-(7, 1, 'Echanger de l\'information sous différentes formes', 'orale, écrite, corporelle, électronique', 4),
-(8, 1, 'Réaliser les activités reliées à votre résidence', 'aménagement, entretien, utilisation des équipements', 5),
-(9, 2, 'Vous déplacer sur de courtes distances', 'dans votre résidence ou votre environnement restreint', 5),
-(10, 1, 'Vous déplacer à l\'aide de moyens de transport', 'comme conducteur ou passager', 6),
-(11, 1, 'Assurer vos responsabilités civiles, civiques et familiales', 'prise en charge d\'individus ou d\'animaux de compagnie', 7),
-(12, 2, 'Assurer vos responsabilités financières', 'gestion administrative', 7),
-(13, 1, 'Avoir des relations affectives ou intimes', 'conjoint, famille', 8),
-(14, 2, 'Avoir des relations sociales', 'amis, voisins, ...', 8),
-(15, 1, 'Participer aux activités et organisations de votre milieu', 'associations, clubs, pratique religieuse ou spirituelle', 9),
-(16, 2, 'Faire vos achats et utiliser les commerces et services publics de votre milieu', 'Poste, administration, services sociaux, hôpitaux', 9),
-(17, 1, 'Réaliser des activités reliées à votre formation', 'scolaire, professionnelle...', 10),
-(18, 1, 'Réaliser des activités reliées à un emploi', 'recherche, exécution de tâche...', 11),
-(19, 2, 'Réaliser des activités reliées à une occupation non rémunérée', 'bénévolat, activité rémunérée, occupationnelle', 11),
-(20, 1, 'Réaliser des activités de loisirs', 'art, sports, passe-temps, sorties...', 12);
+INSERT INTO `question` (`id`,`number`, `position`, `question`, `description`, `category_id`) VALUES
+(1,1,1, 'Préparer vos repas', 'Planification et préparation des repas.', 1),
+(2,2,2, 'Prendre vos repas', NULL, 1),
+(3,3,1, 'Dormir', NULL, 2),
+(4,4,2, 'Maintenir une bonne condition physique et mentale', 'exercices physiques, relaxation, psychothérapie', 2),
+(5,5,1, 'Assurer vos soins personnels', 'Hygiène, apparence, soins de santé', 3),
+(6,6,2, 'Vous habiller et vous déshabiller', 'vêtements, accessoires, incluant le choix des vêtements', 3),
+(7,7,1, 'Echanger de l\'information sous différentes formes', 'orale, écrite, corporelle, électronique', 4),
+(8,8,1, 'Réaliser les activités reliées à votre résidence', 'aménagement, entretien, utilisation des équipements', 5),
+(9,9,2, 'Vous déplacer sur de courtes distances', 'dans votre résidence ou votre environnement restreint', 5),
+(10,10,1, 'Vous déplacer à l\'aide de moyens de transport', 'comme conducteur ou passager', 6),
+(11,11,1, 'Assurer vos responsabilités civiles, civiques et familiales', 'prise en charge d\'individus ou d\'animaux de compagnie', 7),
+(12,12,2, 'Assurer vos responsabilités financières', 'gestion administrative', 7),
+(13,13,1, 'Avoir des relations affectives ou intimes', 'conjoint, famille', 8),
+(14,14,2, 'Avoir des relations sociales', 'amis, voisins, ...', 8),
+(15,15, 1, 'Participer aux activités et organisations de votre milieu', 'associations, clubs, pratique religieuse ou spirituelle', 9),
+(16,16, 2, 'Faire vos achats et utiliser les commerces et services publics de votre milieu', 'Poste, administration, services sociaux, hôpitaux', 9),
+(17,17, 1, 'Réaliser des activités reliées à votre formation', 'scolaire, professionnelle...', 10),
+(18,18, 1, 'Réaliser des activités reliées à un emploi', 'recherche, exécution de tâche...', 11),
+(19,19, 2, 'Réaliser des activités reliées à une occupation non rémunérée', 'bénévolat, activité rémunérée, occupationnelle', 11),
+(20,20, 1, 'Réaliser des activités de loisirs', 'art, sports, passe-temps, sorties...', 12);
 
 --
 -- Contenu de la table `user`

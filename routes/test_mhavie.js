@@ -1,32 +1,39 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
-/* GET home page. */
+
+
+//Appelle un questionnaire selon son code
+
 router.get('/:code', function (req, res, next) {
     var code = req.params.code;
     models.Questionnaire.findOne({where: {code: code}}).then(function (questionnaire) {
+        //Si aucun resultat -> redirection vers la home utilisateur avec un message d'erreur
         if (questionnaire === null) {
             res.render('index', {title: 'Test', msg: "Le test " + code + " n'existe pas"})
         }
         questionnaire = questionnaire.dataValues;
+
+        //Si resultat ok -> affichage le formulaire sur la derniere question affichée lors de la saisie précédente
         models.Question.findOne({
             where: {number: questionnaire.last_question},
             include: [models.Categorie]
         }).then(function (question) {
+            //Recherche de la question, si elle a été enregistrée
             models.Reponse.findOne({
                 where: {
                     questionnaire_id: questionnaire.id,
                     question_id: question.id
                 }
             }).then(function (reponse) {
-                console.log(reponse);
+                //Si question non répondue affichage de la question sans réponse
                 if(reponse === null)
                 {
                     res.render('test_mhavie_questions', {title: 'Test', code: code, question: question})
                 }
+                //Si question répondue affichage de la question avec valeur des réponses
                 else
                 {
-                    console.log("has reponse");
                     res.render('test_mhavie_questions', {title: 'Test', code: code, question: question, reponse: reponse.dataValues})
                 }
             })
@@ -35,17 +42,21 @@ router.get('/:code', function (req, res, next) {
     })
 });
 
-
+//Post de la question
 router.post('/:code/:question', function (req, res, next) {
     var code = req.params.code;
     var questionNb = req.params.question;
+    //next = valeur du bouton utilisé (suivant ou précédent)
     var next = req.body.next;
     var value = req.body.valueInput;
     var satisfaction = req.body.satisfactionInput;
 
     models.Questionnaire.findOne({where: {code: code}}).then(function (questionnaire) {
+        // on enregistre la dernière question selon le number de la question +/- 1 selon la valeur du bouton utilisé (suivant ou précédent)
         questionnaire.last_question = Number(questionNb) + Number(next);
         questionnaire.save({fields: ['last_question']});
+
+        // création ou edition des valeurs des réponses selon si la question a déjà été répondue dans le questionnaire
         models.Question.findOne({where: {number: questionNb}}).then(function (question) {
             models.Reponse.findOrCreate({
                 where: {
@@ -56,7 +67,7 @@ router.post('/:code/:question', function (req, res, next) {
                 response.value = value;
                 response.satisfaction = satisfaction;
                 response.save({fields: ['value', 'satisfaction']}).then(function (e) {
-                    res.redirect('/test/' + code);
+                    res.redirect(global.prefix+'test/' + code);
                 })
             })
 
@@ -64,25 +75,29 @@ router.post('/:code/:question', function (req, res, next) {
 
     });
 });
+
+//creation d'un formulaire (code + timestamp)
 router.post('/', function (req, res, next) {
     var code = generateCode();
     models.Questionnaire.create({
         date: new Date(),
         code: code
     }).then(function (item) {
-        res.redirect('/test/' + code);
+        //redirection vers la saisie du questionnaire
+        res.redirect(global.prefix+'test/' + code);
     }).catch(function (err) {
-        res.redirect(307, '/test');
+        res.redirect(307, global.prefix+'test');
     });
 });
 
 
 module.exports = router;
 
-
+// méthode pour générer un code de 8 caractères de A-Z et 0-9 (moins 0 et O, I et 1 pour éviter la confusion)
+// 1 099 511 627 776 possibilités avec 8 caractères
 function generateCode() {
     var text = "";
-    var possible = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+    var possible = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     for (var i = 0; i < 8; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
