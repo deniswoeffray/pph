@@ -90,6 +90,8 @@
     //valeur pas défaut si rien répondu
     $("[name='satisfaction']").click(function () {
         satisfaction = $("[name='satisfaction']:checked").val();
+        $('#satisfactionInput').val(satisfaction);
+
     });
 
     //si "sans aide" est clické les autres aides sont désactivées
