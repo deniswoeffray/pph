@@ -1,0 +1,16 @@
+{{!-- views/login.hbs --}}
+
+{{#> baseLayout }}
+
+    {{#*inline "content-block"}}
+        <h1>{{title}}</h1>
+        <div id="msg">{{msg}}</div>
+        <!--Post vers la création de formulaire-->
+        <form action="/login" method="post">
+            <input type="text" name="username"/><br>
+            <input type="password" name="password"/><br>
+            <button type="submit">Login</button>
+        </form>
+    {{/inline}}
+
+{{/baseLayout}}
