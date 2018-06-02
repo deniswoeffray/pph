@@ -14,11 +14,21 @@ router.get('/:code', function (req, res, next) {
         }
         questionnaire = questionnaire.dataValues;
 
+        //Si la question suivante dépasse le numéro max des question enregistrées -> page de validation
+        models.Question.max('number').then(max => {
+            if(questionnaire.last_question > max)
+            {
+                res.render('validation',{code:code,question:questionnaire.last_question - 1});
+            }
+        });
+
         //Si resultat ok -> affichage le formulaire sur la derniere question affichée lors de la saisie précédente
         models.Question.findOne({
             where: {number: questionnaire.last_question},
             include: [models.Categorie]
         }).then(function (question) {
+
+
             //Recherche de la question, si elle a été enregistrée
             models.Reponse.findOne({
                 where: {
@@ -29,12 +39,12 @@ router.get('/:code', function (req, res, next) {
                 //Si question non répondue affichage de la question sans réponse
                 if(reponse === null)
                 {
-                    res.render('test_mhavie_questions', {title: 'Test', code: code, question: question})
+                    res.render('test_mhavie_questions', {title: 'Test', code: code, question: question, questionnaire:questionnaire})
                 }
                 //Si question répondue affichage de la question avec valeur des réponses
                 else
                 {
-                    res.render('test_mhavie_questions', {title: 'Test', code: code, question: question, reponse: reponse.dataValues})
+                    res.render('test_mhavie_questions', {title: 'Test', code: code, question: question, reponse: reponse.dataValues, questionnaire:questionnaire})
                 }
             })
 
@@ -51,24 +61,37 @@ router.post('/:code/:question', function (req, res, next) {
     var value = req.body.valueInput;
     var satisfaction = req.body.satisfactionInput;
 
+
+
     models.Questionnaire.findOne({where: {code: code}}).then(function (questionnaire) {
         // on enregistre la dernière question selon le number de la question +/- 1 selon la valeur du bouton utilisé (suivant ou précédent)
         questionnaire.last_question = Number(questionNb) + Number(next);
         questionnaire.save({fields: ['last_question']});
 
+
         // création ou edition des valeurs des réponses selon si la question a déjà été répondue dans le questionnaire
         models.Question.findOne({where: {number: questionNb}}).then(function (question) {
+
+
             models.Reponse.findOrCreate({
                 where: {
                     questionnaire_id: questionnaire.id,
                     question_id: question.id
                 }
             }).spread(function (response, created) {
-                response.value = value;
-                response.satisfaction = satisfaction;
-                response.save({fields: ['value', 'satisfaction']}).then(function (e) {
+                if(value!=null)
+                {
+                    response.value = value;
+                    response.satisfaction = satisfaction;
+                    response.save({fields: ['value', 'satisfaction']}).then(function (e) {
+                        res.redirect(global.prefix+'test/' + code);
+                    })
+                }
+                else
+                {
                     res.redirect(global.prefix+'test/' + code);
-                })
+                }
+
             })
 
         })

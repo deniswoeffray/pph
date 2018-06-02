@@ -71,10 +71,12 @@
     </div>
 </div>
 <div>
+    {{questionnaire.last_question}}
     <form action="/test/{{code}}/{{question.number}}" method="post">
         <input id="valueInput" name="valueInput" type="hidden" value="">
         <input id="satisfactionInput" name="satisfactionInput" type="hidden" value="">
-        <button id="prev" type="submit" name="next" value="-1">Précédent</button>
+            <button id="prev" type="submit" name="next" value="-1">Précédent</button>
+
         <button type="submit" name="next" value="1" id="next">Suivant</button>
     </form>
 
@@ -157,6 +159,15 @@
         //le champ valeur du formulaire (caché) prend la valeur calculée
         $('#valueInput').val(value);
     });
+</script>
+
+<!--test de questionnaire.last_question pour ne pas arriver à la question numéro 0 -->
+<script>
+    var questionNumber = {{questionnaire.last_question}}
+    if(questionNumber==1)
+    {
+        $('#prev').hide();
+    }
 </script>
 
 <!--Si la réponse est trouvée dans les routes-->
