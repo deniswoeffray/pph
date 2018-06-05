@@ -1,0 +1,27 @@
+{{#> baseLayout }}
+
+    {{#*inline "content-block"}}
+        <h1>User list</h1>
+        <div class="titles">
+            <input id="user-id-label" type="text" value="Id" />
+            <input id="user-lastname-label" type="text" value="Nom" />
+            <input id="user-firstname-label" type="text" value="Prenom" />
+            <input id="user-email-label" type="text" value="E-mail" />
+            <input id="user-password-label" type="text" value="Mot de passe" />
+            <input id="user-role-label" type="text" value="Rôle" />
+        </div>
+            {{#each users}}
+                <div class="user">
+                    <input id="user-{{this.id}}" type="text" value="{{this.id}}" />
+                    <input id="user-{{this.id}}-name" type="text" value="{{this.nom}}" />
+                    <input id="user-{{this.id}}-firstname" type="text" value="{{this.prenom}}" />
+                    <input id="user-{{this.id}}-email" type="text" value="{{this.email}}" />
+                    <input id="user-{{this.id}}-password" type="text" value="{{this.password}}" />
+                    <input id="user-{{this.id}}-role" type="text" value="{{this.role}}" />
+                    <button onclick="">save</button>
+                    <button onclick="">delete</button>
+                </div>
+            {{/each}}
+    {{/inline}}
+
+{{/baseLayout}}
