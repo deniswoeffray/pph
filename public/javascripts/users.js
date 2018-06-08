@@ -7,19 +7,17 @@ function updateUser(id, form) {
             nom: form.lastname.value,
             prenom: form.firstname.value,
             email: form.email.value,
-            password: form.password.value,
+            password_clear : form.password.value,
             role: form.role.value
         })
-        .then(console.log('user saved')); // Log successful update
+        .then(window.location.href = '/users'); // Log successful update
 }
 
 /* Delete user */
 function deleteUser(id) {
-    console.log(`/users/${id}`)
     // Call DELETE for removing the user
     superagent.delete(`/users/${id}`) // Delete current user
         .then(() => {
-            console.log('user deleted'); // Log successful delete
             window.location.href = '/users'; // Reload users page
         });
 }
