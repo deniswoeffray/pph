@@ -14,6 +14,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testMhavieRouter = require('./routes/test_mhavie');
 var rapportRouter = require('./routes/rapport');
+var rapportTableRouter = require('./routes/rapportTable');
 
 var app = express();
 global.prefix = (process.env.PREFIX) || "/";
