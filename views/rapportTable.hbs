@@ -1,0 +1,48 @@
+{{!-- views/rapportTable.hbs --}}
+
+
+
+
+{{#> baseLayout }}
+    {{#*inline "content-block"}}
+        <h1>rapport - {{code}}</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+
+                <th scope="col">Category</th>
+                <th scope="col">Questions</th>
+                <th scope="col">Valeurs</th>
+                <th scope="col">Satisfaction</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each reponses}}
+                <tr>
+                    <td>{{this.Question.Categorie.name}}</td>
+                    <td>{{this.Question.question}}</td>
+                    <td>{{this.value}}</td>
+                    <td class="sat-{{this.satisfaction}}"></td>
+
+                        </tr>
+            {{/each}}
+
+            </tbody>
+        </table>
+
+    {{/inline}}
+
+    {{#*inline "scripts-block"}}
+        <!--Si la réponse est trouvée dans les routes-->
+            <script>
+                    $(function(){
+                        console.log('ok');
+                        $('.sat-1').html("Insatisfait");
+                        $('.sat-2').html("+/- satisfait");
+                        $('.sat-3').html("Satisfait");
+                    })
+            </script>
+    {{/inline}}
+
+{{/baseLayout}}

@@ -11,6 +11,7 @@ var usersRouter = require('./routes/users');
 var helloWorldRouter = require('./routes/helloworld');
 var testMhavieRouter = require('./routes/test_mhavie');
 var rapportRouter = require('./routes/rapport');
+var rapportTableRouter = require('./routes/rapportTable');
 
 var app = express();
 global.prefix = (process.env.PREFIX) || "/";
@@ -33,6 +34,7 @@ app.use('/users', usersRouter);
 app.use('/hello', helloWorldRouter);
 app.use('/test', testMhavieRouter);
 app.use('/rapport', rapportRouter);
+app.use('/rapportTable', rapportTableRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
