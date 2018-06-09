@@ -105,9 +105,23 @@ router.post('/', function (req, res, next) {
     models.Questionnaire.create({
         date: new Date(),
         code: code
-    }).then(function (item) {
-        //redirection vers la saisie du questionnaire
-        res.redirect(global.prefix+'test/' + code);
+    }).then(function (questionnaire) {
+        models.Question.findAll().then(function(questions){
+            questions = questions;
+            for(let q of questions)
+            {
+                console.log("QUESTION");
+                console.log(q);
+                models.Reponse.create({
+                    value:-2,
+                    satisfaction:0,
+                    questionnaire_id:questionnaire.id,
+                    question_id:q.id,
+                })
+            }
+            res.redirect(global.prefix+'test/' + code);
+
+        });
     }).catch(function (err) {
         res.redirect(307, global.prefix+'test');
     });

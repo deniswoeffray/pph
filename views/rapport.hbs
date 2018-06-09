@@ -29,7 +29,7 @@
         }
         {{/each}}
 
-
+    //TODO only one element of each kind
     //array with all values by categories
     data.categoriesValues = [];
         {{#each reponses}}
@@ -43,50 +43,78 @@
             data.categoriesValues[data.categories.indexOf("{{this.Question.Categorie.name}}")].push({{this.value}});
         {{/each}}
 
-    //TODO gérer les non réponses (-2)
 
+    console.log(data.categoriesValues);
+    var colors = [];
     var finalValues = [];
 
     for(let t of data.categoriesValues)
     {
-        var div = 0;
-        var number = 0;
-        for(let i of t)
+        if(t.length==1)
         {
-
-            if(i>=0)
+            if(t[0]==-2)
             {
-                number = number+i;
-                div++;
+                finalValues.push(0)
+                colors.push("grey");
+
             }
-        }
-        if(div==0)
-        {
-            finalValues.push(-1);
+            if(t[0]==0)
+            {
+                finalValues.push(-1)
+                colors.push("lightblue");
+            }
+            if(t[0]==-1)
+            {
+                finalValues.push(-1);
+                colors.push("grey");
+            }
+            else
+            {
+                finalValues.push(t[0]);
+                colors.push(getColor(t[0]));
+            }
         }
         else
         {
-            finalValues.push(number/div);
+            if(t[0]==-1 && t[1]==-1)
+            {
+                finalValues.push(-1);
+                colors.push("grey")
+            }
+
+            else
+            {
+                finalValues.push(0);
+                colors.push("grey")
+            }
         }
+
     }
 
-    var colors = [];
-    for (let v of finalValues) {
+    console.log(finalValues);
+
+
+
+
+
+
+    function getColor (v) {
         if (v < 0) {
-            colors.push('grey');
+            return 'grey';
         }
         else if (v < 4) {
-            colors.push('red');
+            return 'red';
 
         }
         else if (v < 7) {
-            colors.push('orange');
+            return 'orange';
 
         }
         else {
-            colors.push('green');
+            return 'green';
         }
     }
+
 
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -112,25 +140,7 @@
         }
     });
 
-    var dataset = myChart.data.datasets[0];
-    for (let i = 0; i < dataset.data.length; i++) {
-        if (dataset.data[i] < 0) {
-            dataset.backgroundColor[i] = "grey";
-            dataset.borderColor[i] = "grey";
-        }
-        else if (dataset.data[i] < 4) {
-            dataset.backgroundColor[i] = "red";
-            dataset.borderColor[i] = "red";
-        }
-        else if (dataset.data[i] < 7) {
-            dataset.backgroundColor[i] = "orange";
-            dataset.borderColor[i] = "orange";
-        }
-        else {
-            dataset.backgroundColor[i] = "green";
-            dataset.borderColor[i] = "green";
-        }
-    }
+
 </script>
 
 </body>
