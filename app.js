@@ -76,7 +76,6 @@ app.use('/', isAuthenticated, indexRouter);
 app.use('/users', isAdmin, usersRouter);
 app.use('/test', isAuthenticated, testMhavieRouter);
 app.use('/rapport', isAuthenticated, rapportRouter);
-app.use('/rapportTable', isAuthenticated, rapportTableRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
