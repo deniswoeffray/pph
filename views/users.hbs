@@ -2,7 +2,7 @@
 
     {{#*inline "content-block"}}
         <h1>User list</h1>
-        <form class = "addForm" action='/users' method='POST'>
+        <form class = "userForm" action='/users' method='POST'>
             <div class="addUser">
                 <input name="lastname" type="text" placeholder="Lastname here"/>
                 <input name="firstname" type="text" placeholder="Firstname here"/>
@@ -15,7 +15,7 @@
                 <button type ="submit" name="addUserButton">Add user</button>
             </div>
         </form>
-            <div class="titles">
+            <div id="titles">
                 <input id="user-id-label" type="text" value="Id" readonly/>
                 <input id="user-lastname-label" type="text" value="Nom" readonly/>
                 <input id="user-firstname-label" type="text" value="Prenom" readonly/>
@@ -26,19 +26,27 @@
 
             {{#each users}}
                 <form class="userForm">
-                    <div class="user">
-                        <input id="user-{{this.id}}" type="text" value="{{this.id}}" />
-                        <input id="user-{{this.id}}-name" name="firstname" type="text" value="{{this.nom}}" />
-                        <input id="user-{{this.id}}-firstname" name="lastname" type="text" value="{{this.prenom}}" />
-                        <input id="user-{{this.id}}-email" name="email" type="text" value="{{this.email}}" />
-                        <input id="user-{{this.id}}-password" name="password" type="text" value="{{this.password}}" />
-                        <input id="user-{{this.id}}-role" name="role" type="text" value="{{this.role}}" />
-                        <button type="button" onclick="updateUser({{this.id}}, this.form)">Save</button>
-                        <button type="button" onclick="deleteUser({{this.id}})">Delete</button>
+                    <div class="form-group">
+                        <input id="user-{{this.id}}" type="text" value="{{this.id}}" readonly />
+                        <input id="user-{{this.id}}-lastname" name="lastname" type="text" value="{{this.nom}}" readonly/>
+                        <input id="user-{{this.id}}-firstname" name="firstname" type="text" value="{{this.prenom}}" readonly/>
+                        <input id="user-{{this.id}}-email" name="email" type="text" value="{{this.email}}" readonly/>
+                        <input id="user-{{this.id}}-password" name="password" type="text" value="{{this.password}}" readonly/>
+                        <input id="user-{{this.id}}-role-readonly" name="role-readonly" type="text" value="{{this.role}}" readonly/>
+                        <select id="user-{{this.id}}-role" name="role" style="display:none">
+                            <option value="user">user</option>
+                            <option value="admin">admin</option>
+                        </select>
+                        <button id="editUserButton-{{this.id}}"type="button" onclick="showForm({{this.id}})" >Edit</button>
+                        <button id="saveUserButton-{{this.id}}" type="button" onclick="updateUser({{this.id}}, this.form)" style="display:none" >Save</button>
+                        <button type="button" onclick="deleteUser({{this.id}})" >Delete</button>
                     </div>
                 </form>
             {{/each}}
     {{/inline}}
-{{/baseLayout}}
 
+    {{#*inline "scripts-block"}}
+    {{/inline}}
+{{/baseLayout}}
 <script src='javascripts/users.js'></script>
+
