@@ -1,6 +1,8 @@
 /* Update user */
 function updateUser(id, form) {
     // Call PUT for updating the user
+    console.log("updateUser");
+
     superagent.put('/users')
         .send({
             id: id,
@@ -10,7 +12,11 @@ function updateUser(id, form) {
             password_clear : form.password.value,
             role: form.role.value
         })
-        .then(window.location.href = '/users'); // Log successful update
+        .then(function(){
+            window.location.href = '/users'; // Reload users page
+        });
+
+
 }
 
 /* Delete user */
@@ -20,4 +26,17 @@ function deleteUser(id) {
         .then(() => {
             window.location.href = '/users'; // Reload users page
         });
+}
+
+/* Show save button, replace role field by dropdown list */
+function showForm(id) {
+    console.log("LOG : show edit button");
+    document.getElementById(`saveUserButton-${id}`).style.display='inline';
+    document.getElementById(`user-${id}-role`).style.display='inline';
+    //document.getElementById(`user-${id}-role-readonly`).style.display='none';
+    document.getElementById(`editUserButton-${id}`).style.display='none';
+    $(`#user-${id}-lastname`).prop('readonly', false);
+    $(`#user-${id}-firstname`).prop('readonly', false);
+    $(`#user-${id}-email`).prop('readonly', false);
+    $(`#user-${id}-password`).prop('readonly', false);
 }

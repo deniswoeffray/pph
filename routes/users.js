@@ -26,20 +26,33 @@ router.post('/', (req, res, next) => {
 
 /* PUT to update user */
 router.put('/', (req, res, next) => {
-    models.User.update({
-        nom: req.body.lastname,
-        prenom: req.body.firstname,
-        email: req.body.email,
-        password_clear: req.body.password_clear,
-        role: req.body.role
-    },{
-        where : {id: req.body.id}
-    }).then((nbRows) => {
-        console.log('LOG : user successfully updated ');
-        res.redirect('/users');
-    });
+    console.log(req.body);
+    models.User.findOne({where:{id:req.body.id}}).then(function (user) {
+        if(req.body.password_clear === user.password) {
+            user.update({
+                nom: req.body.nom,
+                prenom: req.body.prenom,
+                email: req.body.email,
+                // password not saved
+                role: req.body.role
+            }).then(function () {
+                console.log("password not modified");
+                res.send("user updated");
+            })
+        } else {
+            user.update({
+                nom: req.body.nom,
+                prenom: req.body.prenom,
+                email: req.body.email,
+                password_clear: req.body.password_clear,
+                role: req.body.role
+            }).then(function(){
+                console.log("password modified");
+                res.send("user updated");
+            })
+        }
+    })
 });
-
 
 /* DELETE user */
 router.delete('/:id', (req, res, next) => {
