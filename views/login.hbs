@@ -3,14 +3,27 @@
 {{#> baseLayout }}
 
     {{#*inline "content-block"}}
-        <h1>{{title}}</h1>
-        <div id="msg">{{msg}}</div>
         <!--Post vers la création de formulaire-->
-        <form action="/login" method="post">
-            <input type="text" name="username"/><br>
-            <input type="password" name="password"/><br>
-            <button type="submit">Login</button>
+        <form class="form-signin" action="/login" method="post">
+            <h1 class="h3 mb-3 font-weight-normal">{{title}}</h1>
+            {{#if messages.error}}
+                <div class="alert alert-danger" role="alert">
+                    {{messages.error}}
+                </div>
+            {{/if}}
+            {{#if messages.success}}
+                <div class="alert alert-success" role="alert">
+                    {{messages.success}}
+                </div>
+            {{/if}}
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input id="inputEmail" name="email" class="form-control" placeholder="Email address" required="" autofocus="" type="email">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input id="inputPassword" name="password" class="form-control" placeholder="Password" required="" type="password">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
+
+
     {{/inline}}
 
 {{/baseLayout}}
