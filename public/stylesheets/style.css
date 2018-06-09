@@ -6780,5 +6780,20 @@ a.text-dark:hover, a.text-dark:focus {
 
 body {
   background-color: lightblue; }
+.legend {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  display: inline-block; }
+  .legend.green {
+    background-color: green; }
+  .legend.orange {
+    background-color: orange; }
+  .legend.red {
+    background-color: red; }
+  .legend.lightblue {
+    background-color: lightblue; }
+  .legend.gray {
+    background-color: gray; }
 
 /*# sourceMappingURL=style.css.map */

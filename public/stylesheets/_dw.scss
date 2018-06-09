@@ -1,4 +1,12 @@
-body
+.legend
 {
-  background-color: lightblue;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  display: inline-block;
+  &.green{background-color: green}
+  &.orange{background-color: orange}
+  &.red{background-color: red}
+  &.lightblue{background-color: lightblue}
+  &.gray{background-color: gray}
 }

@@ -61,7 +61,10 @@ router.post('/:code/:question', function (req, res, next) {
     var value = req.body.valueInput;
     var satisfaction = req.body.satisfactionInput;
 
-
+    if(value=="")
+    {
+        value = -2;
+    }
 
     models.Questionnaire.findOne({where: {code: code}}).then(function (questionnaire) {
         // on enregistre la dernière question selon le number de la question +/- 1 selon la valeur du bouton utilisé (suivant ou précédent)
@@ -105,9 +108,23 @@ router.post('/', function (req, res, next) {
     models.Questionnaire.create({
         date: new Date(),
         code: code
-    }).then(function (item) {
-        //redirection vers la saisie du questionnaire
-        res.redirect(global.prefix+'test/' + code);
+    }).then(function (questionnaire) {
+        models.Question.findAll().then(function(questions){
+            questions = questions;
+            for(let q of questions)
+            {
+                console.log("QUESTION");
+                console.log(q);
+                models.Reponse.create({
+                    value:-2,
+                    satisfaction:0,
+                    questionnaire_id:questionnaire.id,
+                    question_id:q.id,
+                })
+            }
+            res.redirect(global.prefix+'test/' + code);
+
+        });
     }).catch(function (err) {
         res.redirect(307, global.prefix+'test');
     });
