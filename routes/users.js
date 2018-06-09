@@ -16,7 +16,7 @@ router.post('/', (req, res, next) => {
         nom: req.body.lastname,
         prenom: req.body.firstname,
         email: req.body.email,
-        password: req.body.password,
+        password_clear: req.body.password,
         role: req.body.role
     }).then(() => {
         console.log('LOG : user successfully added ')
@@ -30,12 +30,12 @@ router.put('/', (req, res, next) => {
         nom: req.body.lastname,
         prenom: req.body.firstname,
         email: req.body.email,
-        password: req.body.password,
+        password_clear: req.body.password_clear,
         role: req.body.role
     },{
         where : {id: req.body.id}
     }).then((nbRows) => {
-        console.log('LOG : user successfully updated ')
+        console.log('LOG : user successfully updated ');
         res.redirect('/users');
     });
 });
@@ -48,7 +48,7 @@ router.delete('/:id', (req, res, next) => {
         where : {id:  req.params.id}
     }).then((nbRows) => {
         res.send(`user deleted!'`);
-        console.log('LOG : user successfully removed ')
+        console.log('LOG : user successfully removed ');
     });
 })
 
