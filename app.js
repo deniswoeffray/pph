@@ -1,14 +1,17 @@
 var createError = require('http-errors');
 var express = require('express');
+var session = require('express-session');
+var flash = require('express-flash');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 var hbs = require('hbs');
 
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var helloWorldRouter = require('./routes/helloworld');
 var testMhavieRouter = require('./routes/test_mhavie');
 var rapportRouter = require('./routes/rapport');
 var rapportTableRouter = require('./routes/rapportTable');
@@ -28,13 +31,52 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + '/public'));
 
+// use session
+app.use(session({
+    secret:']5=/JBGb41[>:&Ka]7}02qM?p$dY#^',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
+
+app.use(flash());
+
+// Authenticated middleware
+var isAuthenticated = (req, res, next) => {
+    // If we have a session and authenticated is true, continue,
+    // else redirect to the login page
+    if (req.session && !req.session.authenticated) {
+        req.flash('error', 'Please login to access the application');
+        res.redirect('/login');
+    }
+    req.next();
+};
+
+// Admin middleware
+var isAdmin = (req, res, next) => {
+    // If we have a session and authenticated is true,
+    //      if user is admin, continue,
+    //      else redirecto to index
+    // else redirect to the login page
+    if (req.session && req.session.authenticated === true) {
+        if (req.session.user.role === "admin") {
+            next();
+        }else {
+            req.flash('error', 'You\'re not allowed to access this page');
+            res.redirect('/');
+        }
+    }else {
+        res.redirect('/login');
+    }
+};
+
 app.use('/login', loginRouter);
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/hello', helloWorldRouter);
-app.use('/test', testMhavieRouter);
-app.use('/rapport', rapportRouter);
-app.use('/rapportTable', rapportTableRouter);
+app.use('/logout', isAuthenticated, logoutRouter);
+app.use('/', isAuthenticated, indexRouter);
+app.use('/users', isAdmin, usersRouter);
+app.use('/test', isAuthenticated, testMhavieRouter);
+app.use('/rapport', isAuthenticated, rapportRouter);
+app.use('/rapportTable', isAuthenticated, rapportTableRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

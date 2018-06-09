@@ -117,7 +117,12 @@
     });
     //calcul des valeurs au click sur un input
     $("input").click(function () {
+
         //valeur de base selon réalisation
+        $("input").each(function () {
+            console.log($(this).prop('checked'))
+        });
+
         value = $("[name='realisation']:checked").val();
         //si "realisé par substitution" ou "non réalisé" ou "non applicable" est clické, le type d'aide est désactivé
         if ($('#realParSubs').is(':checked') || $('#nonReal').is(':checked') || $('#na').is(':checked')) {
