@@ -6749,6 +6749,9 @@ a.text-dark:hover, a.text-dark:focus {
   .table .thead-dark th {
     color: inherit;
     border-color: #dee2e6; } }
+administration, #add_user_form *, #user_list_labels *, #user_list *, #editable_fields * {
+  display: inline; }
+
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -6778,8 +6781,6 @@ a.text-dark:hover, a.text-dark:focus {
   border-top-left-radius: 0;
   border-top-right-radius: 0; }
 
-body {
-  background-color: lightblue; }
 .legend {
   width: 1em;
   height: 1em;
