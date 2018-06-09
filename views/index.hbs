@@ -16,24 +16,26 @@
 
         <input type="text" id="testCode">
         <button type="submit" id="goToTestBtn">{{i18n 'Afficher test'}}</button>
+        <div id="msg">
+
+        </div>
     {{/inline}}
 
     {{#*inline "scripts-block"}}
         <script>
-
             // Au click du bouton de recherche
             $('#goToTestBtn').click(function () {
                 // Erreur si champ de recherche vide
                 if($('#testCode').val()=="")
                 {
-                    $('#msg').html({{i18n 'Merci d\'entrer un code dans le champ'}});
+                    $('#msg').html("{{i18n 'Merci d\'entrer un code dans le champ'}}");
                 }
                 // Get vers la recherche de formulaire
                 else
                 {
                     window.location.href = '/test/'+$('#testCode').val();
                 }
-            })
+            });
         </script>
     {{/inline}}
 
