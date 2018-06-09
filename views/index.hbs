@@ -11,11 +11,11 @@
         {{/if}}
         <!--Post vers la création de formulaire-->
         <form action="/test" method="post">
-            <button type="submit">Créer un nouveau test</button>
+            <button type="submit">{{i18n 'Créer un nouveau test'}}</button>
         </form>
 
         <input type="text" id="testCode">
-        <button type="submit" id="goToTestBtn">Afficher test</button>
+        <button type="submit" id="goToTestBtn">{{i18n 'Afficher test'}}</button>
     {{/inline}}
 
     {{#*inline "scripts-block"}}
@@ -26,7 +26,7 @@
                 // Erreur si champ de recherche vide
                 if($('#testCode').val()=="")
                 {
-                    $('#msg').html("Merci d'entrer un code dans le champ");
+                    $('#msg').html({{i18n 'Merci d\'entrer un code dans le champ'}});
                 }
                 // Get vers la recherche de formulaire
                 else

@@ -1,18 +1,19 @@
 {{#> baseLayout }}
 
     {{#*inline "content-block"}}
-        <h1>Liste des utilisateurs</h1>
-        <form class = "form-group" action='/users' method='POST'>
-            <div id="add_user_form">
-                <input name="lastname" class="col-md-1 form-control" type="text" placeholder="Lastname here"/>
-                <input name="firstname" class="col-md-1 form-control" type="text" placeholder="Firstname here"/>
-                <input name="email" class="col-md-2 form-control" type="text" placeholder="Email here"/>
-                <input name="password" class="col-md-2 form-control" type="password" placeholder="Password here"/>
-                <select name="role" class="col-md-1 form-control">
-                    <option value="user">user</option>
-                    <option value="admin">admin</option>
+        <h1>{{i18n 'Liste des utilisateurs'}}</h1>
+        <form class = "userForm" action='/users' method='POST'>
+            <div class="addUser">
+                <input name="lastname" type="text" placeholder="{{i18n 'Nom de famille'}}"/>
+                <input name="firstname" type="text" placeholder="{{i18n 'Prénom'}}"/>
+                <input name="email" type="text" placeholder="{{i18n 'Adresse email'}}"/>
+                <input name="password" type="text" placeholder="{{i18n 'Mot de passe'}}"/>
+                <select name="role">
+                    <option value="user">{{i18n 'Utilisateur'}}</option>
+                    <option value="admin">{{i18n 'Administrateur'}}</option>
                 </select>
                 <button type ="submit" class="btn btn-primary" name="addUserButton">Add user</button>
+                <button type ="submit" name="addUserButton">{{i18n 'Ajouter l\'utilisateur'}}</button>
             </div>
         </form>
 
@@ -24,6 +25,14 @@
             <input id="user-password-label" class="col-md-2 form-control" type="text" value="Mot de passe" readonly/>
             <input id="user-role-label" class="col-md-1 form-control" type="text" value="Rôle" readonly/>
         </div>
+            <div id="titles">
+                <input id="user-id-label" type="text" value="Id" readonly/>
+                <input id="user-lastname-label" type="text" value="{{i18n 'Nom de famille'}}" readonly/>
+                <input id="user-firstname-label" type="text" value="{{i18n 'Prénom'}}" readonly/>
+                <input id="user-email-label" type="text" value="{{i18n 'Adresse email'}}" readonly/>
+                <input id="user-password-label" type="text" value="{{i18n 'Mot de passe'}}" readonly/>
+                <input id="user-role-label" type="text" value="{{i18n 'Rôle'}}" readonly/>
+            </div>
 
         {{#each users}}
             <form class="form-group">
@@ -38,10 +47,25 @@
                         <select id="user-{{this.id}}-role" class="col-md-1 form-control" name="role" style="display:none">
                             <option value="user">user</option>
                             <option value="admin">admin</option>
+            {{#each users}}
+                <form class="userForm">
+                    <div class="form-group">
+                        <input id="user-{{this.id}}" type="text" value="{{this.id}}" readonly />
+                        <input id="user-{{this.id}}-lastname" name="lastname" type="text" value="{{this.nom}}" readonly/>
+                        <input id="user-{{this.id}}-firstname" name="firstname" type="text" value="{{this.prenom}}" readonly/>
+                        <input id="user-{{this.id}}-email" name="email" type="text" value="{{this.email}}" readonly/>
+                        <input id="user-{{this.id}}-password" name="password" type="text" value="{{this.password}}" readonly/>
+                        <input id="user-{{this.id}}-role-readonly" name="role-readonly" type="text" value="{{this.role}}" readonly/>
+                        <select id="user-{{this.id}}-role" name="role" style="display:none">
+                            <option value="user">{{i18n 'Utilisateur'}}</option>
+                            <option value="admin">{{i18n 'Administrateur'}}</option>
                         </select>
                         <button id="editUserButton-{{this.id}}"type="button" class="btn btn-primary" onclick="showForm({{this.id}})" >Éditer</button>
                         <button id="saveUserButton-{{this.id}}" type="button" class="btn btn-primary" onclick="updateUser({{this.id}}, this.form)" style="display:none" >Sauver</button>
                         <button type="button" class="btn btn-primary" onclick="deleteUser({{this.id}})" >Supprimer</button>
+                        <button id="editUserButton-{{this.id}}"type="button" onclick="showForm({{this.id}})" >{{i18n 'Modifier'}}</button>
+                        <button id="saveUserButton-{{this.id}}" type="button" onclick="updateUser({{this.id}}, this.form)" style="display:none" >{{i18n 'Sauvegarder'}}</button>
+                        <button type="button" onclick="deleteUser({{this.id}})" >{{i18n 'Supprimer'}}</button>
                     </div>
                 </div>
             </form>
@@ -49,7 +73,6 @@
     {{/inline}}
 
     {{#*inline "scripts-block"}}
+        <script src='javascripts/users.js'></script>
     {{/inline}}
 {{/baseLayout}}
-<script src='javascripts/users.js'></script>
-

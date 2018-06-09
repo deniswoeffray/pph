@@ -6,7 +6,7 @@ var models = require('../models');
 router.get('/', (req, res, next) => {
     models.User.findAll().then((users) => {
         res.render('users', {users: users});
-        console.log('LOG : users successfully loaded ')
+        console.log('LOG : users successfully loaded ');
     });
 });
 
@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
         password_clear: req.body.password,
         role: req.body.role
     }).then(() => {
-        console.log('LOG : user successfully added ')
+        console.log('LOG : user successfully added ');
         res.redirect('/users');
     })
 });
@@ -48,7 +48,7 @@ router.put('/', (req, res, next) => {
                 role: req.body.role
             }).then(function(){
                 console.log("password modified");
-                res.send("user updated");
+                res.send(i18n.__("utilisateur mis à jour"));
             })
         }
     })
@@ -60,7 +60,7 @@ router.delete('/:id', (req, res, next) => {
     models.User.destroy({
         where : {id:  req.params.id}
     }).then((nbRows) => {
-        res.send(`user deleted!'`);
+        res.send(i18n.__('utilisateur supprimé'));
         console.log('LOG : user successfully removed ');
     });
 })
