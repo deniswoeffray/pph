@@ -61,7 +61,10 @@ router.post('/:code/:question', function (req, res, next) {
     var value = req.body.valueInput;
     var satisfaction = req.body.satisfactionInput;
 
-
+    if(value=="")
+    {
+        value = -2;
+    }
 
     models.Questionnaire.findOne({where: {code: code}}).then(function (questionnaire) {
         // on enregistre la dernière question selon le number de la question +/- 1 selon la valeur du bouton utilisé (suivant ou précédent)
