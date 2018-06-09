@@ -1,20 +1,17 @@
 {{!-- views/rapportTable.hbs --}}
 
-
-
-
 {{#> baseLayout }}
     {{#*inline "content-block"}}
-        <h1>rapport - {{code}}</h1>
+        <h1>{{i18n 'Rapport'}} - {{code}}</h1>
 
         <table class="table">
             <thead>
             <tr>
 
-                <th scope="col">Category</th>
-                <th scope="col">Questions</th>
-                <th scope="col">Valeurs</th>
-                <th scope="col">Satisfaction</th>
+                <th scope="col">{{i18n 'Catégorie'}}</th>
+                <th scope="col">{{i18n 'Questions'}}</th>
+                <th scope="col">{{i18n 'Valeurs'}}</th>
+                <th scope="col">{{i18n 'Satisfaction'}}</th>
             </tr>
             </thead>
             <tbody>
@@ -38,9 +35,9 @@
             <script>
                     $(function(){
                         console.log('ok');
-                        $('.sat-1').html("Insatisfait");
-                        $('.sat-2').html("+/- satisfait");
-                        $('.sat-3').html("Satisfait");
+                        $('.sat-1').html("{{i18n 'Insatisfait'}}");
+                        $('.sat-2').html("{{i18n '+/- satisfait'}}");
+                        $('.sat-3').html("{{i18n 'Satisfait'}}");
                     })
             </script>
     {{/inline}}

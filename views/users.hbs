@@ -1,27 +1,27 @@
 {{#> baseLayout }}
 
     {{#*inline "content-block"}}
-        <h1>User list</h1>
+        <h1>{{i18n 'Liste des utilisateurs'}}</h1>
         <form class = "userForm" action='/users' method='POST'>
             <div class="addUser">
-                <input name="lastname" type="text" placeholder="Lastname here"/>
-                <input name="firstname" type="text" placeholder="Firstname here"/>
-                <input name="email" type="text" placeholder="Email here"/>
-                <input name="password" type="text" placeholder="Password here"/>
+                <input name="lastname" type="text" placeholder="{{i18n 'Nom de famille'}}"/>
+                <input name="firstname" type="text" placeholder="{{i18n 'Prénom'}}"/>
+                <input name="email" type="text" placeholder="{{i18n 'Adresse email'}}"/>
+                <input name="password" type="text" placeholder="{{i18n 'Mot de passe'}}"/>
                 <select name="role">
-                    <option value="user">user</option>
-                    <option value="admin">admin</option>
+                    <option value="user">{{i18n 'Utilisateur'}}</option>
+                    <option value="admin">{{i18n 'Administrateur'}}</option>
                 </select>
-                <button type ="submit" name="addUserButton">Add user</button>
+                <button type ="submit" name="addUserButton">{{i18n 'Ajouter l\'utilisateur'}}</button>
             </div>
         </form>
             <div id="titles">
                 <input id="user-id-label" type="text" value="Id" readonly/>
-                <input id="user-lastname-label" type="text" value="Nom" readonly/>
-                <input id="user-firstname-label" type="text" value="Prenom" readonly/>
-                <input id="user-email-label" type="text" value="E-mail" readonly/>
-                <input id="user-password-label" type="text" value="Mot de passe" readonly/>
-                <input id="user-role-label" type="text" value="Rôle" readonly/>
+                <input id="user-lastname-label" type="text" value="{{i18n 'Nom de famille'}}" readonly/>
+                <input id="user-firstname-label" type="text" value="{{i18n 'Prénom'}}" readonly/>
+                <input id="user-email-label" type="text" value="{{i18n 'Adresse email'}}" readonly/>
+                <input id="user-password-label" type="text" value="{{i18n 'Mot de passe'}}" readonly/>
+                <input id="user-role-label" type="text" value="{{i18n 'Rôle'}}" readonly/>
             </div>
 
             {{#each users}}
@@ -34,19 +34,18 @@
                         <input id="user-{{this.id}}-password" name="password" type="text" value="{{this.password}}" readonly/>
                         <input id="user-{{this.id}}-role-readonly" name="role-readonly" type="text" value="{{this.role}}" readonly/>
                         <select id="user-{{this.id}}-role" name="role" style="display:none">
-                            <option value="user">user</option>
-                            <option value="admin">admin</option>
+                            <option value="user">{{i18n 'Utilisateur'}}</option>
+                            <option value="admin">{{i18n 'Administrateur'}}</option>
                         </select>
-                        <button id="editUserButton-{{this.id}}"type="button" onclick="showForm({{this.id}})" >Edit</button>
-                        <button id="saveUserButton-{{this.id}}" type="button" onclick="updateUser({{this.id}}, this.form)" style="display:none" >Save</button>
-                        <button type="button" onclick="deleteUser({{this.id}})" >Delete</button>
+                        <button id="editUserButton-{{this.id}}"type="button" onclick="showForm({{this.id}})" >{{i18n 'Modifier'}}</button>
+                        <button id="saveUserButton-{{this.id}}" type="button" onclick="updateUser({{this.id}}, this.form)" style="display:none" >{{i18n 'Sauvegarder'}}</button>
+                        <button type="button" onclick="deleteUser({{this.id}})" >{{i18n 'Supprimer'}}</button>
                     </div>
                 </form>
             {{/each}}
     {{/inline}}
 
     {{#*inline "scripts-block"}}
+        <script src='javascripts/users.js'></script>
     {{/inline}}
 {{/baseLayout}}
-<script src='javascripts/users.js'></script>
-

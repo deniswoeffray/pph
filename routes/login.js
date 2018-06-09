@@ -2,10 +2,11 @@ var express = require('express');
 var bcrypt = require('bcrypt');
 var router = express.Router();
 var models = require('../models');
+var i18n = require ('i18n');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('login', { title: 'Login' });
+    res.render('login', { title: 'Connexion' });
 });
 
 router.post('/', function(req, res, next) {
@@ -26,14 +27,14 @@ router.post('/', function(req, res, next) {
                     res.redirect('/');
                 } else {
                     // Passwords don't match
-                    req.flash('error', 'Incorrect password!');
-                    res.redirect('/login');
+                    req.flash('error', i18n.__('Mot de passe incorrect'));
+                    res.redirect(global.prefix+'login');
                 }
             });
         }else{
             // user not found
-            req.flash('error', 'User not found!');
-            res.redirect('/login');
+            req.flash('error', i18n.__('Utilisateur non trouvé'));
+            res.redirect(global.prefix+'login');
         }
     });
 });

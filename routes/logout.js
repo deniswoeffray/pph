@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
     req.session.destroy();
-    res.redirect('/login');
+    res.redirect(global.prefix+'login');
 });
 
 module.exports = router;
