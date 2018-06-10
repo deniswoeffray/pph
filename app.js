@@ -7,6 +7,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('hbs');
+var validator = require('express-validator');
 
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
@@ -86,6 +87,9 @@ app.use(flash());
 
 // internationalisation
 app.use(i18n.init);
+
+// validation
+app.use(validator());
 
 // Authenticated middleware
 var isAuthenticated = (req, res, next) => {
