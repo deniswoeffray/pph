@@ -145,7 +145,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
+//TODO delete these lines after development
 models.User.findOrCreate({
     where:{nom:'admin'},
     defaults: {nom: 'admin', prenom:'admin', email:'admin@admin.loc', password_clear:'pph12345',role:'admin'}
