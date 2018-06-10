@@ -48,7 +48,7 @@ router.put('/', (req, res, next) => {
                 role: req.body.role
             }).then(function(){
                 console.log("password modified");
-                res.send(i18n.__("utilisateur mis à jour"));
+                res.send("user updated");
             })
         }
     })
@@ -60,7 +60,7 @@ router.delete('/:id', (req, res, next) => {
     models.User.destroy({
         where : {id:  req.params.id}
     }).then((nbRows) => {
-        res.send(i18n.__('utilisateur supprimé'));
+        res.send("user removed");
         console.log('LOG : user successfully removed ');
     });
 })
