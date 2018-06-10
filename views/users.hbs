@@ -27,7 +27,7 @@
             <input id="user-password-label" class="col-md-2 form-control" type="text" value="{{i18n 'Mot de passe'}}" readonly/>
             <input id="user-role-label" class="col-md-1 form-control" type="text" value="{{i18n 'Rôle'}}" readonly/>
         </div>
-
+        {{#each users}}
             <form class="form-group">
                 <div id="user_list" class="form-group row">
                     <input id="user-{{this.id}}" class="col-md-1 form-control" type="text" value="{{this.id}}" readonly />
