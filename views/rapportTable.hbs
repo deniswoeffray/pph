@@ -42,39 +42,39 @@
 
     {{#*inline "scripts-block"}}
         <!--Si la réponse est trouvée dans les routes-->
-        <script>
-            $(function(){
-                console.log('ok');
-                $('.sat-1').html("{{i18n 'Insatisfait'}}");
-                $('.sat-2').html("{{i18n '+/- satisfait'}}");
-                $('.sat-3').html("{{i18n 'Satisfait'}}");
+            <script>
+                    $(function(){
+                        console.log('ok');
+                        $('.sat-1').html("{{i18n 'Insatisfait'}}");
+                        $('.sat-2').html("{{i18n '+/- satisfait'}}");
+                        $('.sat-3').html("{{i18n 'Satisfait'}}");
 
-                $('.rea-r9').html("{{i18n 'Sans difficulté'}}");
-                $('.aid-a9').html("{{i18n 'Sans aide'}}");
+                        $('.rea-r9').html("{{i18n 'Sans difficulté'}}");
+                        $('.aid-a9').html("{{i18n 'Sans aide'}}");
 
-                $('.rea-r8').html("{{i18n 'Sans difficulté'}}");
-                $('.aid-a8').html("{{i18n 'Aide technique / aménagement'}}");
+                        $('.rea-r8').html("{{i18n 'Sans difficulté'}}");
+                        $('.aid-a8').html("{{i18n 'Aide technique / aménagement'}}");
 
-                $('.rea-r7').html("{{i18n 'Avec difficulté'}}");
-                $('.aid-a7').html("{{i18n 'Sans aide'}}");
+                        $('.rea-r7').html("{{i18n 'Avec difficulté'}}");
+                        $('.aid-a7').html("{{i18n 'Sans aide'}}");
 
-                $('.rea-r6').html("{{i18n 'Sans difficulté'}}");
-                $('.aid-a6').html("{{i18n 'Aide technique / aménagement'}}");
+                        $('.rea-r6').html("{{i18n 'Sans difficulté'}}");
+                        $('.aid-a6').html("{{i18n 'Aide technique / aménagement'}}");
 
-                $('.rea-r5').html("{{i18n 'Sans difficulté'}}");
-                $('.aid-a5').html("{{i18n 'Aide humaine'}}");
+                        $('.rea-r5').html("{{i18n 'Sans difficulté'}}");
+                        $('.aid-a5').html("{{i18n 'Aide humaine'}}");
 
-                $('.rea-r3').html("{{i18n 'Avec difficulté'}}");
-                $('.aid-a3').html("{{i18n 'Aide humaine'}}");
+                        $('.rea-r3').html("{{i18n 'Avec difficulté'}}");
+                        $('.aid-a3').html("{{i18n 'Aide humaine'}}");
 
-                $('.rea-r1').html("{{i18n 'Réalisé par substitution'}}");
-                $('.aid-a1').html("-");
+                        $('.rea-r1').html("{{i18n 'Réalisé par substitution'}}");
+                        $('.aid-a1').html("-");
 
-                $('.rea-r0').html("{{i18n 'Non réalisé'}}");
-                $('.aid-a0').html("-");
+                        $('.rea-r0').html("{{i18n 'Non réalisé'}}");
+                        $('.aid-a0').html("-");
 
-                $('.rea-r-1').html("{{i18n 'Ne s applique pas'}}");
-                $('.aid-a-1').html("-");
+                        $('.rea-r-1').html("{{i18n 'Ne s applique pas'}}");
+                        $('.aid-a-1').html("-");
 
                 var seen = {};
                 $('#reponseTable td:first-child').each(function()
