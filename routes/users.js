@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
-const { check, validationResult } = require('express-validator/check');
-
 /* GET users listing. */
 router.get('/', (req, res, next) => {
     models.User.findAll().then((users) => {
@@ -13,16 +11,7 @@ router.get('/', (req, res, next) => {
 });
 
 /* POST new user */
-router.post('/', [
-    check('email').isEmail()
-],(req, res, next) => {
-    // Finds the validation errors in this request and wraps them in an object with handy functions
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
-        //res.redirect('/users', {message:errors.msg});
-    }
-
+router.post('/',(req, res, next) => {
     models.User.create({
         nom: req.body.lastname,
         prenom: req.body.firstname,

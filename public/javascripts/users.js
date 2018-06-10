@@ -32,8 +32,6 @@ function deleteUser(id) {
 function showForm(id) {
     console.log("LOG : show edit button");
     $(`#saveUserButton-${id}`).show();
-    // $(`#user-${id}-role`).style.display='inline';
-    //document.getElementById(`user-${id}-role-readonly`).style.display='none';
     $(`#user-${id}-role`).prop('disabled',false);
     $(`#editUserButton-${id}`).hide();
     $(`#user-${id}-lastname`).prop('readonly', false);

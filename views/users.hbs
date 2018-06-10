@@ -2,16 +2,15 @@
 
     {{#*inline "content-block"}}
         <h1>{{i18n 'Console d\'administration'}}</h1>
-        <p value="{{message}}"></p>
         <form class= "form-group" action='/users' method='POST'>
             <h3>{{i18n 'Ajouter un utilisateur'}}</h3>
             <div id="add_user_form" class="row">
-                <input name="lastname" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Nom de famille'}}"/>
-                <input name="firstname" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Prénom'}}"/>
-                <input name="email" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Adresse email'}}"/>
-                <input name="password" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Mot de passe'}}"/>
-                <select name="role" class="col-md-2 form-control">
-                    <option value="default">{{i18n 'Choisir un rôle'}}</option>
+                <input name="lastname" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Nom de famille'}}" required/>
+                <input name="firstname" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Prénom'}}" required/>
+                <input name="email" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Adresse email'}}" required/>
+                <input name="password" class="col-md-2 form-control" type="password" placeholder="{{i18n 'Mot de passe'}}" minlength="4" required/>
+                <select name="role" class="col-md-2 form-control" required>
+                    <option value="default" disabled selected>{{i18n 'Choisir un rôle'}}</option>
                     <option value="user">{{i18n 'Utilisateur'}}</option>
                     <option value="admin">{{i18n 'Administrateur'}}</option>
                 </select>
@@ -27,34 +26,28 @@
             <div id="user-email-label" class="col-md-2">{{i18n 'Email'}}</div>
             <div id="user-password-label" class="col-md-2">{{i18n 'Mot de passe'}}</div>
             <div id="user-role-label" class="col-md-1">{{i18n 'Rôle'}}</div>
-            <!--<div id="user-lastname-label" class="col-md-2" type="text" value="{{i18n 'Nom de famille'}}" />-->
-            <!--<div id="user-firstname-label" class="col-md-2" type="text" value="{{i18n 'Prénom'}}" />-->
-            <!--<div id="user-email-label" class="col-md-2" type="text" value="{{i18n 'Adresse email'}}" />-->
-            <!--<div id="user-password-label" class="col-md-2" type="text" value="{{i18n 'Mot de passe'}}" />-->
-            <!--<div id="user-role-label" class="col-md-1" type="text" value="{{i18n 'Rôle'}}" />-->
         </div>
         {{#each users}}
             <form class="form-group">
                 <div id="user_list" class="form-group row">
                     <div id="user-{{this.id}}" class="col-md-1" />{{this.id}}</div>
                 <div class="col-md-2">
-                    <input id="user-{{this.id}}-lastname" class="form-control" name="lastname" type="text" value="{{this.nom}}" readonly/>
+                    <input id="user-{{this.id}}-lastname" class="form-control" name="lastname" type="text" value="{{this.nom}}" required readonly/>
                 </div>
                 <div class="col-md-2">
-                    <input id="user-{{this.id}}-firstname" class="form-control" name="firstname" type="text" value="{{this.prenom}}" readonly/>
+                    <input id="user-{{this.id}}-firstname" class="form-control" name="firstname" type="text" value="{{this.prenom}}" required readonly/>
 
                 </div>
                 <div class="col-md-2">
-                    <input id="user-{{this.id}}-email" class="form-control" name="email" type="text" value="{{this.email}}" readonly/>
+                    <input id="user-{{this.id}}-email" class="form-control" name="email" type="text" value="{{this.email}}" required readonly/>
 
                 </div>
                 <div class="col-md-2">
-                    <input id="user-{{this.id}}-password" class="form-control" name="password" type="password" value="{{this.password}}" readonly/>
+                    <input id="user-{{this.id}}-password" class="form-control" name="password" type="password" minlength="4" value="{{this.password}}" required readonly/>
 
                 </div>
                 <div class="col-md-1">
-
-                    <select id="user-{{this.id}}-role" class="form-control" name="role" disabled>
+                    <select id="user-{{this.id}}-role" class="form-control" name="role" required disabled>
                         <option value="user">user</option>
                         <option value="admin">admin</option>
                     </select>
@@ -73,7 +66,7 @@
         <script src='javascripts/users.js'></script>
         <script>
                 {{#each users}}
-                    $('#user-{{this.id}}-role').val('{{this.role}}');
+                $('#user-{{this.id}}-role').val('{{this.role}}');
                 {{/each}}
         </script>
     {{/inline}}
