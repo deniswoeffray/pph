@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('hbs');
 var validator = require('express-validator');
+var models = require('./models');
 
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
@@ -143,5 +144,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+models.User.findOrCreate({
+    where:{nom:'admin'},
+    defaults: {nom: 'admin', prenom:'admin', email:'admin@admin.loc', password_clear:'pph12345',role:'admin'}
+}).spread(function (user,created){
+    console.log("ADMIN CREATED")
+    console.log(created)
+})
+
 
 module.exports = app;
