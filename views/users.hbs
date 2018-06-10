@@ -7,7 +7,7 @@
             <div id="add_user_form" class="row">
                 <input name="lastname" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Nom de famille'}}" required/>
                 <input name="firstname" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Prénom'}}" required/>
-                <input name="email" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Adresse email'}}" required/>
+                <input name="email" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Adresse email'}}" pattern="[a-zA-Z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
                 <input name="password" class="col-md-2 form-control" type="password" placeholder="{{i18n 'Mot de passe'}}" minlength="4" required/>
                 <select name="role" class="col-md-2 form-control" required>
                     <option value="default" disabled selected>{{i18n 'Choisir un rôle'}}</option>

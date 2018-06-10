@@ -26,7 +26,6 @@ router.post('/',(req, res, next) => {
 
 /* PUT to update user */
 router.put('/', (req, res, next) => {
-    console.log(req.body);
     models.User.findOne({where:{id:req.body.id}}).then(function (user) {
         if(req.body.password_clear === user.password) {
             user.update({
