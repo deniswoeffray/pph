@@ -2,23 +2,25 @@
 
 
 {{#> scripts-css}}
-        <link href="../public/stylesheets/rapportTable.css " type="text/css" rel="stylesheet" media="print">
+    <link href="../public/stylesheets/rapportTable.css " type="text/css" rel="stylesheet" media="print">
 {{/scripts-css}}
 
 
 {{#> baseLayout }}
     {{#*inline "content-block"}}
+        <h1>{{i18n 'Rapport'}} - {{code}}</h1>
         <h1>Rapport - {{code}}</h1>
 
         <table id="reponseTable" class="table table-bordered">
             <thead class="thead-dark">
             <tr>
 
-                <th scope="col">Category</th>
-                <th scope="col">Questions</th>
-                <th scope="col">Réalisation</th>
-                <th scope="col">Type d'aide</th>
-                <th scope="col">Satisfaction</th>
+                <th scope="col">{{i18n 'Catégorie'}}</th>
+                <th scope="col">{{i18n 'Questions'}}</th>
+                <th scope="col">{{i18n 'Réalisation'}}</th>
+                <th scope="col">{{i18n 'Type aide'}}</th>
+                <th scope="col">{{i18n 'Satisfaction'}}</th>
+
             </tr>
             </thead>
             <tbody>
@@ -30,7 +32,7 @@
                     <td class="aid-a{{this.value}}"></td>
                     <td class="sat-{{this.satisfaction}}"></td>
 
-                        </tr>
+                </tr>
             {{/each}}
 
             </tbody>
@@ -40,59 +42,59 @@
 
     {{#*inline "scripts-block"}}
         <!--Si la réponse est trouvée dans les routes-->
-            <script>
-                    $(function(){
-                        console.log('ok');
-                        $('.sat-1').html("Insatisfait");
-                        $('.sat-2').html("+/- satisfait");
-                        $('.sat-3').html("Satisfait");
+        <script>
+            $(function(){
+                console.log('ok');
+                $('.sat-1').html("{{i18n 'Insatisfait'}}");
+                $('.sat-2').html("{{i18n '+/- satisfait'}}");
+                $('.sat-3').html("{{i18n 'Satisfait'}}");
 
-                        $('.rea-r9').html("Sans difficulté");
-                        $('.aid-a9').html("Sans aide");
+                $('.rea-r9').html("{{i18n 'Sans difficulté'}}");
+                $('.aid-a9').html("{{i18n 'Sans aide'}}");
 
-                        $('.rea-r8').html("Sans difficulté");
-                        $('.aid-a8').html("Aide technique / aménagement");
+                $('.rea-r8').html("{{i18n 'Sans difficulté'}}");
+                $('.aid-a8').html("{{i18n 'Aide technique / aménagement'}}");
 
-                        $('.rea-r7').html("Avec difficulté");
-                        $('.aid-a7').html("Sans aide");
+                $('.rea-r7').html("{{i18n 'Avec difficulté'}}");
+                $('.aid-a7').html("{{i18n 'Sans aide'}}");
 
-                        $('.rea-r6').html("Avec difficulté");
-                        $('.aid-a6').html("Aide technique / aménagement");
+                $('.rea-r6').html("{{i18n 'Sans difficulté'}}");
+                $('.aid-a6').html("{{i18n 'Aide technique / aménagement'}}");
 
-                        $('.rea-r5').html("Sans difficulté");
-                        $('.aid-a5').html("Aide humaine");
+                $('.rea-r5').html("{{i18n 'Sans difficulté'}}");
+                $('.aid-a5').html("{{i18n 'Aide humaine'}}");
 
-                        $('.rea-r3').html("Avec difficulté");
-                        $('.aid-a3').html("Aide humaine");
+                $('.rea-r3').html("{{i18n 'Avec difficulté'}}");
+                $('.aid-a3').html("{{i18n 'Aide humaine'}}");
 
-                        $('.rea-r1').html("Réalisé par substitution");
-                        $('.aid-a1').html("-");
+                $('.rea-r1').html("{{i18n 'Réalisé par substitution'}}");
+                $('.aid-a1').html("-");
 
-                        $('.rea-r0').html("Non réalisé");
-                        $('.aid-a0').html("-");
+                $('.rea-r0').html("{{i18n 'Non réalisé'}}");
+                $('.aid-a0').html("-");
 
-                        $('.rea-r-1').html("Ne s'applique pas");
-                        $('.aid-a-1').html("-");
+                $('.rea-r-1').html("{{i18n 'Ne s applique pas'}}");
+                $('.aid-a-1').html("-");
 
-                        var seen = {};
-                        $('#reponseTable td:first-child').each(function()
-                        {
-                            var $this = $(this);
-                            var index = $this.index();
-                            var txt =  $this.text();
-                            if (seen[index] === txt)
-                            {
-                                $($this.parent().prev().children()[index]).attr('rowspan', 2);
-                                $this.hide();
-                            }
-                            else
-                            {
-                                seen[index] = txt;
-                            }
-                        });
+                var seen = {};
+                $('#reponseTable td:first-child').each(function()
+                {
+                    var $this = $(this);
+                    var index = $this.index();
+                    var txt =  $this.text();
+                    if (seen[index] === txt)
+                    {
+                        $($this.parent().prev().children()[index]).attr('rowspan', 2);
+                        $this.hide();
+                    }
+                    else
+                    {
+                        seen[index] = txt;
+                    }
+                });
 
-                    })
-            </script>
+            })
+        </script>
     {{/inline}}
 
 {{/baseLayout}}

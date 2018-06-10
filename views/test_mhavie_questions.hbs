@@ -1,266 +1,244 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <base href="/grp13" />
+{{!-- views/rapportTable.hbs --}}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="stylesheets/style.css">
+{{#> baseLayout }}
+    {{#*inline "content-block"}}
+        <h5 class="mt-3 mb-3">{{code}}</h5>
+        <h4 class="mb-3">{{question.Categorie.name}}</h4>
+        <h2>{{question.number}}. {{question.question}}</h2>
+        <p style="height: 1em">{{question.description}}</p>
+        <!--<pre>obligatoire:{{question.obligatoire}}</pre>-->
+        <!--<pre>value: <span id="value"></span></pre>-->
+        <!--<pre>satisfaction: <span id="satisfaction"></span></pre>-->
+        <div class="row">
+            <div class="col">
+                <p><b>{{i18n 'Réalisation'}}</b></p>
+                <input name="realisation" id="sansDiff" type="radio" value="9">
+                <label for="sansDiff">{{i18n 'Sans difficulté'}}</label><br>
 
+                <input name="realisation" id="avecDiff" type="radio" value="7">
+                <label for="avecDiff">{{i18n 'Avec difficulté'}}</label><br>
 
-    <script
-            src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
+                <input name="realisation" id="realParSubs" type="radio" value="1">
+                <label for="realParSubs">{{i18n 'Réalisé par substitution'}}</label><br>
 
-    <title>{{title}}</title>
+                <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="nonReal" type="radio" value="0">
+                <label for="nonReal">{{i18n 'Non réalisé'}}</label><br>
 
-</head>
-<body class="container">
-<h5>{{code}}</h5>
-<h4>{{question.Categorie.name}}</h4>
-<h2>{{question.number}}. {{question.question}}</h2>
-<p>{{question.description}}</p>
-<!--<pre>obligatoire:{{question.obligatoire}}</pre>-->
-<!--<pre>value: <span id="value"></span></pre>-->
-<!--<pre>satisfaction: <span id="satisfaction"></span></pre>-->
-<div class="row">
-    <div class="col">
-        <p><b>Réalisation</b></p>
-        <input name="realisation" id="sansDiff" type="radio" value="9">
-        <label for="sansDiff">Sans difficulté</label><br>
+                <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="na" type="radio" value="-1">
+                <label for="na">{{i18n 'Ne s\'applique pas'}}</label><br>
 
-        <input name="realisation" id="avecDiff" type="radio" value="7">
-        <label for="avecDiff">Avec difficulté</label><br>
+            </div>
+            <div class="col">
+                <p><b>{{i18n 'Type d\'aide'}}</b></p>
+                <input id="sansAide" type="checkbox" value="">
+                <label for="sansAide">{{i18n 'Sans aide'}}</label><br>
 
-        <input name="realisation" id="realParSubs" type="radio" value="1">
-        <label for="realParSubs">Réalisé par substitution</label><br>
+                <input id="aideTech" type="checkbox" value="">
+                <label for="aideTech">{{i18n 'Aide technique ou aménagement'}}</label><br>
 
-        <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="nonReal" type="radio" value="0">
-        <label for="nonReal">Non réalisé</label><br>
+                <input id="aideHumaine" type="checkbox" value="">
+                <label for="aideHumaine">Aide humaine</label><br>
+            </div>
+            <div class="col">
+                <p><b>{{i18n 'Satisfaction'}}</b></p>
+                <input name="satisfaction" id="insatisfait" type="radio" value="1">
+                <label for="insatisfait">{{i18n 'Insatisfait'}}</label><br>
 
-        <input {{#if question.obligatoire}}disabled{{/if}} name="realisation" id="na" type="radio" value="-1">
-        <label for="na">Ne s'applique pas</label><br>
+                <input name="satisfaction" id="plusOuMoins" type="radio" value="2">
+                <label for="plusOuMoins">{{i18n '+/- satisfait'}}</label><br>
 
-    </div>
-    <div class="col">
-        <p><b>Type d'aide</b></p>
-        <input id="sansAide" type="checkbox" value="">
-        <label for="sansAide">Sans aide</label><br>
+                <input name="satisfaction" id="satisfait" type="radio" value="3">
+                <label for="satisfait">{{i18n 'Satisfait'}}</label><br>
+            </div>
+        </div>
 
-        <input id="aideTech" type="checkbox" value="">
-        <label for="aideTech">Aide technique ou aménagement</label><br>
+            <form class=" mt-5" action="/test/{{code}}/{{question.number}}" method="post">
+                <div class="row">
 
+                <input id="valueInput" name="valueInput" type="hidden" value="">
+                <input id="satisfactionInput" name="satisfactionInput" type="hidden" value="">
+                <div class="col-6">
+                    <button class="btn btn-primary btn-block" id="prev" type="submit" name="next" value="-1">{{i18n 'Précédent'}}</button>
 
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-primary btn-block" type="submit" name="next" value="1" id="next">{{i18n 'Suivant'}}</button>
 
-        <input id="aideHumaine" type="checkbox" value="">
-        <label for="aideHumaine">Aide humaine</label><br>
-    </div>
-    <div class="col">
-        <p><b>Satisfaction</b></p>
-        <input name="satisfaction" id="insatisfait" type="radio" value="1">
-        <label for="insatisfait">Insatisfait</label><br>
+                </div>
+                </div>
 
-        <input name="satisfaction" id="plusOuMoins" type="radio" value="2">
-        <label for="plusOuMoins">+/- satisfait</label><br>
+            </form>
+    {{/inline}}
 
-        <input name="satisfaction" id="satisfait" type="radio" value="3">
-        <label for="satisfait">Satisfait</label><br>
-    </div>
-</div>
-<div>
-    {{questionnaire.last_question}}
-    <form action="/test/{{code}}/{{question.number}}" method="post">
-        <input id="valueInput" name="valueInput" type="hidden" value="">
-        <input id="satisfactionInput" name="satisfactionInput" type="hidden" value="">
-            <button id="prev" type="submit" name="next" value="-1">Précédent</button>
+    {{#*inline "scripts-block"}}
+        <script>
+            //valeur pas défaut si rien répondu
+            var value = -2;
+            var satisfaction = -2;
 
-        <button type="submit" name="next" value="1" id="next">Suivant</button>
-    </form>
+            //valeur pas défaut si rien répondu
+            $("[name='satisfaction']").click(function () {
+                satisfaction = $("[name='satisfaction']:checked").val();
+                $('#satisfactionInput').val(satisfaction);
 
-</div>
+            });
 
-<script>
-    //valeur pas défaut si rien répondu
-    var value = -2;
-    var satisfaction = -2;
+            //si "sans aide" est clické les autres aides sont désactivées
+            $("#sansAide").click(function () {
+                if($(this).is(":checked")) {
+                    $('#aideTech').prop('checked',false);
+                    $('#aideHumaine').prop('checked',false);
+                }
+            });
 
-    //valeur pas défaut si rien répondu
-    $("[name='satisfaction']").click(function () {
-        satisfaction = $("[name='satisfaction']:checked").val();
-        $('#satisfactionInput').val(satisfaction);
+            //si "aide technique ou aménagement" est clické "sans aide" est désactivées
+            $("#aideTech").click(function () {
+                if($(this).is(":checked")) {
+                    $('#sansAide').prop('checked',false);
+                }
+            });
 
-    });
+            //si "aide humaine" est clické "sans aides" est désactivées
+            $("#aideHumaine").click(function () {
+                if($(this).is(":checked")) {
+                    $('#sansAide').prop('checked',false);
+                }
+            });
+            //calcul des valeurs au click sur un input
+            $("input").click(function () {
 
-    //si "sans aide" est clické les autres aides sont désactivées
-    $("#sansAide").click(function () {
-        if($(this).is(":checked")) {
-            $('#aideTech').prop('checked',false);
-            $('#aideHumaine').prop('checked',false);
-        }
-    });
+                //valeur de base selon réalisation
+                $("input").each(function () {
+                    console.log($(this).prop('checked'))
+                });
 
-    //si "aide technique ou aménagement" est clické "sans aide" est désactivées
-    $("#aideTech").click(function () {
-        if($(this).is(":checked")) {
-            $('#sansAide').prop('checked',false);
-        }
-    });
+                value = $("[name='realisation']:checked").val();
+                //si "realisé par substitution" ou "non réalisé" ou "non applicable" est clické, le type d'aide est désactivé
+                if ($('#realParSubs').is(':checked') || $('#nonReal').is(':checked') || $('#na').is(':checked')) {
+                    $('#aideTech').prop('disabled', true);
+                    $('#aideTech').prop('checked', false);
+                    $('#aideHumaine').prop('disabled', true);
+                    $('#aideHumaine').prop('checked', false);
 
-    //si "aide humaine" est clické "sans aides" est désactivées
-    $("#aideHumaine").click(function () {
-        if($(this).is(":checked")) {
-            $('#sansAide').prop('checked',false);
-        }
-    });
-    //calcul des valeurs au click sur un input
-    $("input").click(function () {
+                    $('#sansAide').prop('disabled', true);
+                    $('#sansAide').prop('checked', false);
+                }
+                //sinon le type d'aide est activé
+                else {
+                    $('#aideTech').prop('disabled', false);
+                    $('#aideHumaine').prop('disabled', false);
+                    $('#sansAide').prop('disabled', false);
+                }
+                //si non applicable est clické, la satisfaction est desactivée
+                if ($('[name="realisation"]:checked').val() < 0) {
+                    $('#satisfait').prop('disabled', true);
+                    $('#satisfait').prop('checked', false);
+                    $('#insatisfait').prop('disabled', true);
+                    $('#insatisfait').prop('checked', false);
+                    $('#plusOuMoins').prop('disabled', true);
+                    $('#plusOuMoins').prop('checked', false);
+                }
+                //sinon la satisfaction est activée
+                else {
+                    $('#satisfait').prop('disabled', false);
+                    $('#insatisfait').prop('disabled', false);
+                    $('#plusOuMoins').prop('disabled', false);
+                }
+                //si aide humaine est selectionné on enlève 4pt de valeur
+                if ($('#aideHumaine').is(':checked')) {
+                    value = value - 4;
+                }
+                //si aide technique ou aménagement est selectionné on enlève 1pt de valeur
+                if ($('#aideTech').is(':checked')) {
+                    value = value - 1;
+                }
+                //le champ valeur du formulaire (caché) prend la valeur calculée
+                $('#valueInput').val(value);
+            });
+        </script>
 
-        //valeur de base selon réalisation
-        $("input").each(function () {
-            console.log($(this).prop('checked'))
-        });
+        <!--test de questionnaire.last_question pour ne pas arriver à la question numéro 0 -->
+        <script>
+            var questionNumber = {{questionnaire.last_question}}
+            if(questionNumber==1)
+            {
+                $('#prev').prop("disabled", true);
+            }
+        </script>
 
-        value = $("[name='realisation']:checked").val();
-        //si "realisé par substitution" ou "non réalisé" ou "non applicable" est clické, le type d'aide est désactivé
-        if ($('#realParSubs').is(':checked') || $('#nonReal').is(':checked') || $('#na').is(':checked')) {
-            $('#aideTech').prop('disabled', true);
-            $('#aideTech').prop('checked', false);
-            $('#aideHumaine').prop('disabled', true);
-            $('#aideHumaine').prop('checked', false);
+        <!--Si la réponse est trouvée dans les routes-->
+        {{#if reponse}}
+            <script>
+                //la satisfaction prend la valeur enregistrée
+                $('[name="satisfaction"][value="{{reponse.satisfaction}}"]').prop("checked", true);
+                //génération d'un clic pour calculer les valeurs
+                $('[name="satisfaction"][value="{{reponse.satisfaction}}"]').trigger("click");
 
-            $('#sansAide').prop('disabled', true);
-            $('#sansAide').prop('checked', false);
-        }
-        //sinon le type d'aide est activé
-        else {
-            $('#aideTech').prop('disabled', false);
-            $('#aideHumaine').prop('disabled', false);
-            $('#sansAide').prop('disabled', false);
-        }
-        //si non applicable est clické, la satisfaction est desactivée
-        if ($('[name="realisation"]:checked').val() < 0) {
-            $('#satisfait').prop('disabled', true);
-            $('#satisfait').prop('checked', false);
-            $('#insatisfait').prop('disabled', true);
-            $('#insatisfait').prop('checked', false);
-            $('#plusOuMoins').prop('disabled', true);
-            $('#plusOuMoins').prop('checked', false);
-        }
-        //sinon la satisfaction est activée
-        else {
-            $('#satisfait').prop('disabled', false);
-            $('#insatisfait').prop('disabled', false);
-            $('#plusOuMoins').prop('disabled', false);
-        }
-        //si aide humaine est selectionné on enlève 4pt de valeur
-        if ($('#aideHumaine').is(':checked')) {
-            value = value - 4;
-        }
-        //si aide technique ou aménagement est selectionné on enlève 1pt de valeur
-        if ($('#aideTech').is(':checked')) {
-            value = value - 1;
-        }
-        //le champ valeur du formulaire (caché) prend la valeur calculée
-        $('#valueInput').val(value);
-    });
-</script>
+                //assignation de la valeur enregistrée dans la valeur du formulaire
+                value = {{reponse.value}};
 
-<!--test de questionnaire.last_question pour ne pas arriver à la question numéro 0 -->
-<script>
-    var questionNumber = {{questionnaire.last_question}}
-    if(questionNumber==1)
-    {
-        $('#prev').hide();
-    }
-</script>
+                //selon la valeur enregistrée affichage des bonnes coches et trigger de clic pour mettre à jour les valeurs
+                switch (value)
+                {
+                    case -1:
+                        $('#na').prop('checked',true);
+                        $('#na').trigger('click');
+                        break;
+                    case 0:
+                        $('#nonReal').prop('checked',true);
+                        $('#nonReal').trigger('click');
 
-<!--Si la réponse est trouvée dans les routes-->
-{{#if reponse}}
-    <script>
-        //la satisfaction prend la valeur enregistrée
-        $('[name="satisfaction"][value="{{reponse.satisfaction}}"]').prop("checked", true);
-        //génération d'un clic pour calculer les valeurs
-        $('[name="satisfaction"][value="{{reponse.satisfaction}}"]').trigger("click");
+                        break;
+                    case 1:
+                        $('#realParSubs').prop('checked',true);
+                        $('#realParSubs').trigger('click');
 
-        //assignation de la valeur enregistrée dans la valeur du formulaire
-        value = {{reponse.value}};
+                        break;
+                    case 2:
+                        $('#avecDiff').prop('checked',true);
+                        $('#aideTech').prop('checked',true);
+                        $('#aideHumaine').prop('checked',true);
+                        $('#avecDiff').trigger('click');
+                        break;
+                    case 3:
+                        $('#avecDiff').prop('checked',true);
+                        $('#aideHumaine').prop('checked',true);
+                        $('#avecDiff').trigger('click');
+                        break;
+                    case 4:
+                        $('#sansDiff').prop('checked',true);
+                        $('#aideTech').prop('checked',true);
+                        $('#aideHumaine').prop('checked',true);
+                        $('#sansDiff').trigger('click');
+                        break;
+                    case 5:
+                        $('#sansDiff').prop('checked',true);
+                        $('#aideHumaine').prop('checked',true);
+                        $('#sansDiff').trigger('click');
+                        break;
+                    case 6:
+                        $('#avecDiff').prop('checked',true);
+                        $('#aideTech').prop('checked',true);
+                        $('#avecDiff').trigger('click');
+                        break;
+                    case 7:
+                        $('#avecDiff').prop('checked',true);
+                        $('#sansAide').prop('checked',true);
+                        $('#avecDiff').trigger('click');
+                        break;
+                    case 8:
+                        $('#sansDiff').prop('checked',true);
+                        $('#aideTech').prop('checked',true);
+                        $('#sansDiff').trigger('click');
+                        break;
+                    case 9:
+                        $('#sansDiff').prop('checked',true);
+                        $('#sansAide').prop('checked',true);
+                        $('#sansDiff').trigger('click');
+                        break;
+                }
+            </script>
+        {{/if}}
+    {{/inline}}
 
-        //selon la valeur enregistrée affichage des bonnes coches et trigger de clic pour mettre à jour les valeurs
-        switch (value)
-        {
-            case -1:
-                $('#na').prop('checked',true);
-                $('#na').trigger('click');
-                break;
-            case 0:
-                $('#nonReal').prop('checked',true);
-                $('#nonReal').trigger('click');
-
-                break;
-            case 1:
-                $('#realParSubs').prop('checked',true);
-                $('#realParSubs').trigger('click');
-
-                break;
-            case 2:
-                $('#avecDiff').prop('checked',true);
-                $('#aideTech').prop('checked',true);
-                $('#aideHumaine').prop('checked',true);
-                $('#avecDiff').trigger('click');
-                break;
-            case 3:
-                $('#avecDiff').prop('checked',true);
-                $('#aideHumaine').prop('checked',true);
-                $('#avecDiff').trigger('click');
-                break;
-            case 4:
-                $('#sansDiff').prop('checked',true);
-                $('#aideTech').prop('checked',true);
-                $('#aideHumaine').prop('checked',true);
-                $('#sansDiff').trigger('click');
-                break;
-            case 5:
-                $('#sansDiff').prop('checked',true);
-                $('#aideHumaine').prop('checked',true);
-                $('#sansDiff').trigger('click');
-                break;
-            case 6:
-                $('#avecDiff').prop('checked',true);
-                $('#aideTech').prop('checked',true);
-                $('#avecDiff').trigger('click');
-                break;
-            case 7:
-                $('#avecDiff').prop('checked',true);
-                $('#sansAide').prop('checked',true);
-                $('#avecDiff').trigger('click');
-                break;
-            case 8:
-                $('#sansDiff').prop('checked',true);
-                $('#aideTech').prop('checked',true);
-                $('#sansDiff').trigger('click');
-                break;
-            case 9:
-                $('#sansDiff').prop('checked',true);
-                $('#sansAide').prop('checked',true);
-                $('#sansDiff').trigger('click');
-                break;
-        }
-    </script>
-{{/if}}
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+{{/baseLayout}}

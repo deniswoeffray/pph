@@ -1,42 +1,38 @@
 {{#> baseLayout }}
     {{#*inline "content-block"}}
-        <div class="container">
-        <h1 class="mb-4">Rapport - {{code}}</h1>
-
-
+        <h1 class="mb-4">{{i18n 'Rapport'}} - {{code}}</h1>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="participation" data-toggle="tab" href="#participation-labels" role="tab" aria-controls="participation-labels" aria-selected="true">Home</a>
+                    <a class="nav-link active" id="participation" data-toggle="tab" href="#participation-labels" role="tab" aria-controls="participation-labels" aria-selected="true">{{i18n 'Accueil'}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="satisfaction" data-toggle="tab" href="#satisfaction-labels" role="tab" aria-controls="satisfaction-labels" aria-selected="false">Profile</a>
+                    <a class="nav-link" id="satisfaction" data-toggle="tab" href="#satisfaction-labels" role="tab" aria-controls="satisfaction-labels" aria-selected="false">{{i18n 'Profil'}}</a>
                 </li>
-
             </ul>
             <br>
-
-            <canvas id="myChart"></canvas>
-
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="participation-labels" role="tabpanel" aria-labelledby="participation-tab">
-                    <div class="legend green"></div> Bonne participation <br>
-                    <div class="legend orange"></div> Moyenne participation<br>
-                    <div class="legend red"></div> Faible participation<br>
-                    <div class="legend lightblue"></div> Non réalisé<br>
-                    <div class="legend gray"></div> Non applicable<br>
-
-
-
-                </div>
-                <div class="tab-pane fade" id="satisfaction-labels" role="tabpanel" aria-labelledby="satisfaction-tab">
-                    <div class="legend green"></div> Satisfait<br>
-                    <div class="legend orange"></div> +/- satisfait<br>
-                    <div class="legend red"></div> Pas satisfait<br>
-                    <div class="legend gray"></div> Satisfaction indéfinie<br>
+        <div class="row">
+            <div class="col-3">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="participation-labels" role="tabpanel" aria-labelledby="participation-tab">
+                        <div class="legend green"></div> {{i18n 'Bonne participation'}}  <br>
+                        <div class="legend orange"></div> {{i18n 'Moyenne participation'}} <br>
+                        <div class="legend red"></div> {{i18n 'Faible participation'}} <br>
+                        <div class="legend lightblue"></div> {{i18n 'Non réalisé'}} <br>
+                        <div class="legend gray"></div> {{i18n 'Non applicable'}}<br>
+                    </div>
+                    <div class="tab-pane fade" id="satisfaction-labels" role="tabpanel" aria-labelledby="satisfaction-tab">
+                        <div class="legend green"></div> {{i18n 'Satisfait'}}<br>
+                        <div class="legend orange"></div> {{i18n '+/- satisfait'}}<br>
+                        <div class="legend red"></div> {{i18n 'Pas satisfait'}}<br>
+                        <div class="legend gray"></div> {{i18n 'Satisfaction indéfinie'}}<br>
+                    </div>
                 </div>
             </div>
-            <br>
+            <div class="col-9">
+                <canvas id="myChart"></canvas>
+            </div>
         </div>
+
     {{/inline}}
     {{#*inline "scripts-block"}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
@@ -259,7 +255,7 @@
                 data: {
                     labels: data.categories,
                     datasets: [{
-                        label: 'Niveau de participation',
+                        label: "{{i18n 'Niveau de participation'}}",
                         data: finalValues,
                         backgroundColor: colors,
                         borderColor: colors,

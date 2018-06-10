@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var i18n = require('i18n');
 
 
 //Appelle un questionnaire selon son code
@@ -10,7 +11,7 @@ router.get('/:code', function (req, res, next) {
     models.Questionnaire.findOne({where: {code: code}}).then(function (questionnaire) {
         //Si aucun resultat -> redirection vers la home utilisateur avec un message d'erreur
         if (questionnaire === null) {
-            res.render('index', {title: 'Test', msg: "Le test " + code + " n'existe pas"})
+            res.render('index', {title: i18n.__('MHAVIE'), msg: i18n.__("Le test %s n'existe pas", code)})
         }
         questionnaire = questionnaire.dataValues;
 
@@ -39,12 +40,12 @@ router.get('/:code', function (req, res, next) {
                 //Si question non répondue affichage de la question sans réponse
                 if(reponse === null)
                 {
-                    res.render('test_mhavie_questions', {title: 'Test', code: code, question: question, questionnaire:questionnaire})
+                    res.render('test_mhavie_questions', {title: i18n.__('Test'), code: code, question: question, questionnaire:questionnaire})
                 }
                 //Si question répondue affichage de la question avec valeur des réponses
                 else
                 {
-                    res.render('test_mhavie_questions', {title: 'Test', code: code, question: question, reponse: reponse.dataValues, questionnaire:questionnaire})
+                    res.render('test_mhavie_questions', {title: i18n.__('Test'), code: code, question: question, reponse: reponse.dataValues, questionnaire:questionnaire})
                 }
             })
 
@@ -113,8 +114,7 @@ router.post('/', function (req, res, next) {
             questions = questions;
             for(let q of questions)
             {
-                console.log("QUESTION");
-                console.log(q);
+
                 models.Reponse.create({
                     value:-2,
                     satisfaction:0,

@@ -2,16 +2,27 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
+const { check, validationResult } = require('express-validator/check');
+
 /* GET users listing. */
 router.get('/', (req, res, next) => {
     models.User.findAll().then((users) => {
         res.render('users', {users: users});
-        console.log('LOG : users successfully loaded ')
+        console.log('LOG : users successfully loaded ');
     });
 });
 
 /* POST new user */
-router.post('/', (req, res, next) => {
+router.post('/', [
+    check('email').isEmail()
+],(req, res, next) => {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+        //res.redirect('/users', {message:errors.msg});
+    }
+
     models.User.create({
         nom: req.body.lastname,
         prenom: req.body.firstname,
@@ -19,7 +30,7 @@ router.post('/', (req, res, next) => {
         password_clear: req.body.password,
         role: req.body.role
     }).then(() => {
-        console.log('LOG : user successfully added ')
+        console.log('LOG : user successfully added ');
         res.redirect('/users');
     })
 });
@@ -60,7 +71,7 @@ router.delete('/:id', (req, res, next) => {
     models.User.destroy({
         where : {id:  req.params.id}
     }).then((nbRows) => {
-        res.send(`user deleted!'`);
+        res.send("user removed");
         console.log('LOG : user successfully removed ');
     });
 })
