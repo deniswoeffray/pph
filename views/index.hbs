@@ -3,39 +3,90 @@
 {{#> baseLayout }}
 
     {{#*inline "content-block"}}
-        <h1>{{title}}</h1>
-        {{#if messages.error}}
-            <div class="alert alert-danger" role="alert">
-                {{messages.error}}
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <h1 class="mt-3 mb-3">{{title}}</h1>
             </div>
-        {{/if}}
-        <!--Post vers la création de formulaire-->
-        <form action="/test" method="post">
-            <button type="submit">{{i18n 'Créer un nouveau test'}}</button>
-        </form>
+            <div class="col-12 col-md-12">
+                {{#if messages.error}}
+                    <div class="alert alert-danger" role="alert">
+                        {{messages.error}}
+                    </div>
+                {{/if}}
+            </div>
+        </div>
 
-        <input type="text" id="testCode">
-        <button type="submit" id="goToTestBtn">{{i18n 'Afficher test'}}</button>
-        <div id="msg">
+        <div class="row">
+            <div class="col-12">
+                <!--Post vers la création de formulaire-->
+                <form action="/test" method="post">
+                    <button class="btn btn-primary" type="submit">{{i18n 'Créer un nouveau test'}}</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-12">
+                <p>
+                    {{i18n 'ou'}}
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-4">
+                <div class="alert alert-danger" role="alert" id="msg">
+                </div>
+            </div>
+            <div class="col-8"></div>
+            <div class="col-12 col-md-4">
+                <input class="form-control" type="text" id="testCode">
+            </div>
+            <div class="col-12 col-md-3">
+                <button class="btn btn-primary " type="submit" id="goToTestBtn">{{i18n 'Afficher test'}}</button>
+
+            </div>
+        </div>
+
+
+
+
+
+
 
         </div>
     {{/inline}}
 
     {{#*inline "scripts-block"}}
         <script>
-            // Au click du bouton de recherche
-            $('#goToTestBtn').click(function () {
-                // Erreur si champ de recherche vide
-                if($('#testCode').val()=="")
+
+                $('#msg').hide();
+
+                if("{{msg}}"!="")
                 {
-                    $('#msg').html("{{i18n 'Merci d\'entrer un code dans le champ'}}");
+                    $('#msg').show();
+                    $('#msg').html("{{msg}}");
                 }
-                // Get vers la recherche de formulaire
-                else
-                {
-                    window.location.href = '/test/'+$('#testCode').val();
-                }
-            });
+
+                // Au click du bouton de recherche
+                $('#goToTestBtn').click(function () {
+                    // Erreur si champ de recherche vide
+                    if($('#testCode').val()=="")
+                    {
+                        $('#msg').show();
+                        $('#msg').html("{{i18n 'Merci d\'entrer un code dans le champ'}}");
+                    }
+
+                    // Get vers la recherche de formulaire
+                    else
+                    {
+                        window.location.href = '/test/'+$('#testCode').val();
+                    }
+                });
+
+
         </script>
     {{/inline}}
 

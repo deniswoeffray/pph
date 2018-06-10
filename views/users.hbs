@@ -34,7 +34,6 @@
                 <input id="user-role-label" type="text" value="{{i18n 'Rôle'}}" readonly/>
             </div>
 
-        {{#each users}}
             <form class="form-group">
                 <div id="user_list" class="form-group">
                     <input id="user-{{this.id}}" class="col-md-1 form-control" type="text" value="{{this.id}}" readonly />
@@ -75,4 +74,5 @@
     {{#*inline "scripts-block"}}
         <script src='javascripts/users.js'></script>
     {{/inline}}
+
 {{/baseLayout}}
