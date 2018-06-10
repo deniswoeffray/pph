@@ -14,7 +14,7 @@
     <body>
         {{#if @isAuthenticated}}
             <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-                <a class="navbar-brand" href="/">MHavie</a>
+                <a class="navbar-brand" href="/">{{i18n 'MHAVIE'}}</a>
                 <ul class="navbar-nav mr-auto">
                 {{#if @isAdmin}}
                     <li class="nav-item">
@@ -30,7 +30,7 @@
             </nav>
         {{/if}}
 
-        <div class="container">
+        <div class="container-fluid">
             {{#> content-block}}
             {{!-- Content goes here. --}}
             {{/content-block}}
@@ -40,6 +40,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
+
+        <!--<footer class="footer">-->
+            <!--<img class="left" src="/images/logo_pro_infirmis.png">-->
+            <!--<img class="right" src="/images/logo_hes.png">-->
+        <!--</footer>-->
 
         {{#> scripts-block}}
         {{!-- Custom scripts per page can be added. --}}

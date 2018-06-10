@@ -1,3 +1,10 @@
+.bg-dark {
+  background-color: $primary!important;
+}
+
+h1
+{color: $primary}
+
 .legend
 {
   width: 1em;
@@ -9,4 +16,24 @@
   &.red{background-color: red}
   &.lightblue{background-color: lightblue}
   &.gray{background-color: gray}
+}
+
+footer
+{
+  position: absolute;
+  background-color: white;
+  bottom: 0;
+  width: 100%;
+  background-color: transparent;
+  img
+  {
+    margin: 1em;
+    width: 300px;
+    &.right{
+      float:right;
+    }
+    &.left{
+      float:left;
+    }
+  }
 }

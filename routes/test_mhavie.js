@@ -11,7 +11,7 @@ router.get('/:code', function (req, res, next) {
     models.Questionnaire.findOne({where: {code: code}}).then(function (questionnaire) {
         //Si aucun resultat -> redirection vers la home utilisateur avec un message d'erreur
         if (questionnaire === null) {
-            res.render('index', {title: i18n.__('Test'), msg: i18n.__("Le test %s n'existe pas", code)})
+            res.render('index', {title: i18n.__('MHAVIE'), msg: i18n.__("Le test %s n'existe pas", code)})
         }
         questionnaire = questionnaire.dataValues;
 
@@ -114,8 +114,7 @@ router.post('/', function (req, res, next) {
             questions = questions;
             for(let q of questions)
             {
-                console.log("QUESTION");
-                console.log(q);
+
                 models.Reponse.create({
                     value:-2,
                     satisfaction:0,
