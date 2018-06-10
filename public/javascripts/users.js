@@ -31,10 +31,11 @@ function deleteUser(id) {
 /* Show save button, replace role field by dropdown list */
 function showForm(id) {
     console.log("LOG : show edit button");
-    document.getElementById(`saveUserButton-${id}`).style.display='inline';
-    document.getElementById(`user-${id}-role`).style.display='inline';
+    $(`#saveUserButton-${id}`).show();
+    // $(`#user-${id}-role`).style.display='inline';
     //document.getElementById(`user-${id}-role-readonly`).style.display='none';
-    document.getElementById(`editUserButton-${id}`).style.display='none';
+    $(`#user-${id}-role`).prop('disabled',false);
+    $(`#editUserButton-${id}`).hide();
     $(`#user-${id}-lastname`).prop('readonly', false);
     $(`#user-${id}-firstname`).prop('readonly', false);
     $(`#user-${id}-email`).prop('readonly', false);

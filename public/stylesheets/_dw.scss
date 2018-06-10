@@ -37,3 +37,20 @@ footer
     }
   }
 }
+
+.col-md-2.form-control
+{
+  margin-left: .5em;
+  margin-right: .5em;
+}
+
+#user_list_labels
+{
+  font-weight: bold;
+  margin-bottom: 1em;
+
+}
+
+.form-control:focus {
+  border-color: $primary;
+}

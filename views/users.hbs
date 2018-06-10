@@ -20,30 +20,50 @@
         </form>
 
         <h3>{{i18n 'Liste des utilisateurs'}}</h3>
-        <div class="form-group row" id="user_list_labels">
-            <input id="user-id-label" class="col-md-1 form-control" type="text" value="Id" readonly/>
-            <input id="user-lastname-label" class="col-md-2 form-control" type="text" value="{{i18n 'Nom de famille'}}" readonly/>
-            <input id="user-firstname-label" class="col-md-2 form-control" type="text" value="{{i18n 'Prénom'}}" readonly/>
-            <input id="user-email-label" class="col-md-2 form-control" type="text" value="{{i18n 'Adresse email'}}" readonly/>
-            <input id="user-password-label" class="col-md-2 form-control" type="text" value="{{i18n 'Mot de passe'}}" readonly/>
-            <input id="user-role-label" class="col-md-1 form-control" type="text" value="{{i18n 'Rôle'}}" readonly/>
+        <div class="row" id="user_list_labels">
+            <div id="user-id-label" class="col-md-1">{{i18n 'Id'}}</div>
+            <div id="user-nom-label" class="col-md-2">{{i18n 'Nom'}}</div>
+            <div id="user-prenom-label" class="col-md-2">{{i18n 'Prénom'}}</div>
+            <div id="user-email-label" class="col-md-2">{{i18n 'Email'}}</div>
+            <div id="user-password-label" class="col-md-2">{{i18n 'Mot de passe'}}</div>
+            <div id="user-role-label" class="col-md-1">{{i18n 'Rôle'}}</div>
+            <!--<div id="user-lastname-label" class="col-md-2" type="text" value="{{i18n 'Nom de famille'}}" />-->
+            <!--<div id="user-firstname-label" class="col-md-2" type="text" value="{{i18n 'Prénom'}}" />-->
+            <!--<div id="user-email-label" class="col-md-2" type="text" value="{{i18n 'Adresse email'}}" />-->
+            <!--<div id="user-password-label" class="col-md-2" type="text" value="{{i18n 'Mot de passe'}}" />-->
+            <!--<div id="user-role-label" class="col-md-1" type="text" value="{{i18n 'Rôle'}}" />-->
         </div>
         {{#each users}}
             <form class="form-group">
                 <div id="user_list" class="form-group row">
-                    <input id="user-{{this.id}}" class="col-md-1 form-control" type="text" value="{{this.id}}" readonly />
-                    <input id="user-{{this.id}}-lastname" class="col-md-2 form-control" name="lastname" type="text" value="{{this.nom}}" readonly/>
-                    <input id="user-{{this.id}}-firstname" class="col-md-2 form-control" name="firstname" type="text" value="{{this.prenom}}" readonly/>
-                    <input id="user-{{this.id}}-email" class="col-md-2 form-control" name="email" type="text" value="{{this.email}}" readonly/>
-                    <input id="user-{{this.id}}-password" class="col-md-2 form-control" name="password" type="password" value="{{this.password}}" readonly/>
-                    <input id="user-{{this.id}}-role-readonly" class="col-md-1 form-control" name="role-readonly" type="text" value="{{this.role}}" readonly/>
-                    <select id="user-{{this.id}}-role" class="col-md-1 form-control" name="role" style="display:none">
+                    <div id="user-{{this.id}}" class="col-md-1" />{{this.id}}</div>
+                <div class="col-md-2">
+                    <input id="user-{{this.id}}-lastname" class="form-control" name="lastname" type="text" value="{{this.nom}}" readonly/>
+                </div>
+                <div class="col-md-2">
+                    <input id="user-{{this.id}}-firstname" class="form-control" name="firstname" type="text" value="{{this.prenom}}" readonly/>
+
+                </div>
+                <div class="col-md-2">
+                    <input id="user-{{this.id}}-email" class="form-control" name="email" type="text" value="{{this.email}}" readonly/>
+
+                </div>
+                <div class="col-md-2">
+                    <input id="user-{{this.id}}-password" class="form-control" name="password" type="password" value="{{this.password}}" readonly/>
+
+                </div>
+                <div class="col-md-1">
+
+                    <select id="user-{{this.id}}-role" class="form-control" name="role" disabled>
                         <option value="user">user</option>
                         <option value="admin">admin</option>
                     </select>
+                </div>
+                <div class="col-md-2">
                     <button id="editUserButton-{{this.id}}" class="btn btn-primary"  type="button" onclick="showForm({{this.id}})" >{{i18n 'Modifier'}}</button>
                     <button id="saveUserButton-{{this.id}}" class="btn btn-primary"  type="button" onclick="updateUser({{this.id}}, this.form)" style="display:none" >{{i18n 'Sauvegarder'}}</button>
                     <button type="button" class="btn btn-primary"  onclick="deleteUser({{this.id}})" >{{i18n 'Supprimer'}}</button>
+                </div>
                 </div>
             </form>
         {{/each}}
@@ -51,6 +71,11 @@
 
     {{#*inline "scripts-block"}}
         <script src='javascripts/users.js'></script>
+        <script>
+                {{#each users}}
+                    $('#user-{{this.id}}-role').val('{{this.role}}');
+                {{/each}}
+        </script>
     {{/inline}}
 
 {{/baseLayout}}
