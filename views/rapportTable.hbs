@@ -1,28 +1,33 @@
 {{!-- views/rapportTable.hbs --}}
 
 
+{{#> scripts-css}}
+        <link href="../public/stylesheets/rapportTable.css " type="text/css" rel="stylesheet" media="print">
+{{/scripts-css}}
 
 
 {{#> baseLayout }}
     {{#*inline "content-block"}}
-        <h1>rapport - {{code}}</h1>
+        <h1>Rapport - {{code}}</h1>
 
-        <table class="table">
-            <thead>
+        <table id="reponseTable" class="table table-bordered">
+            <thead class="thead-dark">
             <tr>
 
                 <th scope="col">Category</th>
                 <th scope="col">Questions</th>
-                <th scope="col">Valeurs</th>
+                <th scope="col">Réalisation</th>
+                <th scope="col">Type d'aide</th>
                 <th scope="col">Satisfaction</th>
             </tr>
             </thead>
             <tbody>
             {{#each reponses}}
                 <tr>
-                    <td>{{this.Question.Categorie.name}}</td>
+                    <td class="cat-name" >{{this.Question.Categorie.name}}</td>
                     <td>{{this.Question.question}}</td>
-                    <td>{{this.value}}</td>
+                    <td class="rea-r{{this.value}}"></td>
+                    <td class="aid-a{{this.value}}"></td>
                     <td class="sat-{{this.satisfaction}}"></td>
 
                         </tr>
@@ -41,6 +46,51 @@
                         $('.sat-1').html("Insatisfait");
                         $('.sat-2').html("+/- satisfait");
                         $('.sat-3').html("Satisfait");
+
+                        $('.rea-r9').html("Sans difficulté");
+                        $('.aid-a9').html("Sans aide");
+
+                        $('.rea-r8').html("Sans difficulté");
+                        $('.aid-a8').html("Aide technique / aménagement");
+
+                        $('.rea-r7').html("Avec difficulté");
+                        $('.aid-a7').html("Sans aide");
+
+                        $('.rea-r6').html("Avec difficulté");
+                        $('.aid-a6').html("Aide technique / aménagement");
+
+                        $('.rea-r5').html("Sans difficulté");
+                        $('.aid-a5').html("Aide humaine");
+
+                        $('.rea-r3').html("Avec difficulté");
+                        $('.aid-a3').html("Aide humaine");
+
+                        $('.rea-r1').html("Réalisé par substitution");
+                        $('.aid-a1').html("-");
+
+                        $('.rea-r0').html("Non réalisé");
+                        $('.aid-a0').html("-");
+
+                        $('.rea-r-1').html("Ne s'applique pas");
+                        $('.aid-a-1').html("-");
+
+                        var seen = {};
+                        $('#reponseTable td:first-child').each(function()
+                        {
+                            var $this = $(this);
+                            var index = $this.index();
+                            var txt =  $this.text();
+                            if (seen[index] === txt)
+                            {
+                                $($this.parent().prev().children()[index]).attr('rowspan', 2);
+                                $this.hide();
+                            }
+                            else
+                            {
+                                seen[index] = txt;
+                            }
+                        });
+
                     })
             </script>
     {{/inline}}

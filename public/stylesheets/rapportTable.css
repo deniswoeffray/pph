@@ -1,0 +1,24 @@
+@media print {
+    body {
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        font-size: 1em;
+        color: #333333;
+        margin-top: 2cm;
+        margin-right: 2cm;
+        margin-bottom: 1.5cm;
+        margin-left: 2cm
+    }
+
+    @page
+    {
+        size:  auto;   /* auto is the initial value */
+        margin: 0mm;  /* this affects the margin in the printer settings */
+    }
+
+    html
+    {
+        background-color: #721c24;
+        margin: 0px;  /* this affects the margin on the html before sending to printer */
+    }
+}
+
