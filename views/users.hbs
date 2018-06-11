@@ -28,47 +28,90 @@
             <div id="user-role-label" class="col-md-1">{{i18n 'Rôle'}}</div>
         </div>
         {{#each users}}
-            <form class="form-group">
-                <div id="user_list" class="form-group row">
-                    <div id="user-{{this.id}}" class="col-md-1" />{{this.id}}</div>
-                <div class="col-md-2">
-                    <input id="user-{{this.id}}-lastname" class="form-control" name="lastname" type="text" value="{{this.nom}}" required readonly/>
-                </div>
-                <div class="col-md-2">
-                    <input id="user-{{this.id}}-firstname" class="form-control" name="firstname" type="text" value="{{this.prenom}}" required readonly/>
-
-                </div>
-                <div class="col-md-2">
-                    <input id="user-{{this.id}}-email" class="form-control" name="email" type="text" value="{{this.email}}" required readonly/>
-
-                </div>
-                <div class="col-md-2">
-                    <input id="user-{{this.id}}-password" class="form-control" name="password" type="password" minlength="4" value="{{this.password}}" required readonly/>
-
-                </div>
-                <div class="col-md-1">
-                    <select id="user-{{this.id}}-role" class="form-control" name="role" required disabled>
-                        <option value="user">user</option>
-                        <option value="admin">admin</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <button id="editUserButton-{{this.id}}" class="btn btn-primary"  type="button" onclick="showForm({{this.id}})" >{{i18n 'Modifier'}}</button>
-                    <button id="saveUserButton-{{this.id}}" class="btn btn-primary"  type="button" onclick="updateUser({{this.id}}, this.form)" style="display:none" >{{i18n 'Sauvegarder'}}</button>
-                    <button type="button" class="btn btn-primary"  onclick="deleteUser({{this.id}})" >{{i18n 'Supprimer'}}</button>
-                </div>
+            <form id="user-{{this.id}}" class="form-group">
+                <div class="form-group row">
+                    <div id="user-{{this.id}}-id" class="col-md-1" />{{this.id}}</div>
+                    <div class="col-md-2">
+                        <input id="user-{{this.id}}-lastname" class="form-control" name="lastname" type="text" value="{{this.nom}}" required readonly/>
+                    </div>
+                    <div class="col-md-2">
+                        <input id="user-{{this.id}}-firstname" class="form-control" name="firstname" type="text" value="{{this.prenom}}" required readonly/>
+                    </div>
+                    <div class="col-md-2">
+                        <input id="user-{{this.id}}-email" class="form-control" name="email" type="text" value="{{this.email}}" pattern="[a-zA-Z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required readonly/>
+                    </div>
+                    <div class="col-md-2">
+                        <input id="user-{{this.id}}-password" class="form-control" name="password" type="password" minlength="4" value="{{this.password}}" required readonly/>
+                    </div>
+                    <div class="col-md-1">
+                        <select id="user-{{this.id}}-role" class="form-control" name="role" required disabled>
+                            <option value="user">user</option>
+                            <option value="admin">admin</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="editUserButton-{{this.id}}" class="btn btn-primary" type="button" onclick="showForm({{this.id}})" >{{i18n 'Modifier'}}</button>
+                        <button id="saveUserButton-{{this.id}}" class="btn btn-primary" type="submit" style="display:none" >{{i18n 'Sauvegarder'}}</button>
+                        <button type="button" class="btn btn-primary"  onclick="deleteUser({{this.id}})" >{{i18n 'Supprimer'}}</button>
+                    </div>
                 </div>
             </form>
         {{/each}}
     {{/inline}}
 
     {{#*inline "scripts-block"}}
-        <script src='javascripts/users.js'></script>
         <script>
                 {{#each users}}
                 $('#user-{{this.id}}-role').val('{{this.role}}');
                 {{/each}}
         </script>
-    {{/inline}}
+        <script>
+            // Prevent submit default event to update user
+            $(`user-{{this.id}}`).submit(function(e){
+                e.preventDefault();
+                console.log("Action prevented, update user " + {{this.id}});
+                updateUser({{this.id}}, {{this.form}});
+            });
+        </script>
+        <script>
+            /* Update user */
+            function updateUser(id, form) {
+                // Call PUT for updating the user
+                console.log("updateUser");
+                superagent.put('/users')
+                        .send({
+                            id: id,
+                            nom: form.lastname.value,
+                            prenom: form.firstname.value,
+                            email: form.email.value,
+                            password_clear : form.password.value,
+                            role: form.role.value
+                        })
+                        .then(function(){
+                            window.location.href = '/users'; // Reload users page
+                        });
+            }
 
+            /* Delete user */
+            function deleteUser(id) {
+                // Call DELETE for removing the user
+                superagent.delete(`/users/${id}`) // Delete current user
+                        .then(() => {
+                            window.location.href = '/users'; // Reload users page
+                        });
+            }
+
+            /* Show save button, replace role field by dropdown list */
+            function showForm(id) {
+                console.log("LOG : show edit button");
+                $(`#saveUserButton-${id}`).show();
+                $(`#user-${id}-role`).prop('disabled',false);
+                $(`#editUserButton-${id}`).hide();
+                $(`#user-${id}-lastname`).prop('readonly', false);
+                $(`#user-${id}-firstname`).prop('readonly', false);
+                $(`#user-${id}-email`).prop('readonly', false);
+                $(`#user-${id}-password`).prop('readonly', false);
+            }
+        </script>
+    {{/inline}}
 {{/baseLayout}}
