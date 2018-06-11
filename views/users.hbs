@@ -28,7 +28,7 @@
             <div id="user-role-label" class="col-md-1">{{i18n 'Rôle'}}</div>
         </div>
         {{#each users}}
-            <form id="user-{{this.id}}" class="form-group">
+            <form id="user-{{this.id}}-form" class="form-group"><!-- onsubmit="return updateUser({{this.id}}, this.form)"-->>
                 <div class="form-group row">
                     <div id="user-{{this.id}}-id" class="col-md-1" />{{this.id}}</div>
                     <div class="col-md-2">
@@ -51,7 +51,8 @@
                     </div>
                     <div class="col-md-2">
                         <button id="editUserButton-{{this.id}}" class="btn btn-primary" type="button" onclick="showForm({{this.id}})" >{{i18n 'Modifier'}}</button>
-                        <button id="saveUserButton-{{this.id}}" class="btn btn-primary" type="submit" style="display:none" >{{i18n 'Sauvegarder'}}</button>
+                        <!--<button id="saveUserButton-{{this.id}}" class="btn btn-primary" type="submit" style="display:none" >{{i18n 'Sauvegarder'}}</button>-->
+                        <button id="saveUserButton-{{this.id}}" class="btn btn-primary" type="button" onclick="updateUser({{this.id}}, this.form)" style="display:none" >{{i18n 'Sauvegarder'}}</button>
                         <button type="button" class="btn btn-primary"  onclick="deleteUser({{this.id}})" >{{i18n 'Supprimer'}}</button>
                     </div>
                 </div>
@@ -67,11 +68,10 @@
         </script>
         <script>
             // Prevent submit default event to update user
-            $(`user-{{this.id}}`).submit(function(e){
-                e.preventDefault();
-                console.log("Action prevented, update user " + {{this.id}});
-                updateUser({{this.id}}, {{this.form}});
-            });
+            <!--$(`#user-{{this.id}}-form`).submit(function(e){-->
+                <!--e.preventDefault();-->
+                <!--updateUser({{this.id}}, this.form);-->
+            <!--});-->
         </script>
         <script>
             /* Update user */
