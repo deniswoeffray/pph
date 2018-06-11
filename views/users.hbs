@@ -28,7 +28,7 @@
             <div id="user-role-label" class="col-md-1">{{i18n 'Rôle'}}</div>
         </div>
         {{#each users}}
-            <form id="user-{{this.id}}-form" class="form-group"><!-- onsubmit="return updateUser({{this.id}}, this.form)"-->>
+            <form id="user-{{this.id}}-form" class="form-group" data-item="{{this.id}}"><!-- onsubmit="return updateUser({{this.id}}, this.form)"-->>
                 <div class="form-group row">
                     <div id="user-{{this.id}}-id" class="col-md-1" />{{this.id}}</div>
                     <div class="col-md-2">
@@ -51,8 +51,7 @@
                     </div>
                     <div class="col-md-2">
                         <button id="editUserButton-{{this.id}}" class="btn btn-primary" type="button" onclick="showForm({{this.id}})" >{{i18n 'Modifier'}}</button>
-                        <!--<button id="saveUserButton-{{this.id}}" class="btn btn-primary" type="submit" style="display:none" >{{i18n 'Sauvegarder'}}</button>-->
-                        <button id="saveUserButton-{{this.id}}" class="btn btn-primary" type="button" onclick="updateUser({{this.id}}, this.form)" style="display:none" >{{i18n 'Sauvegarder'}}</button>
+                        <button id="saveUserButton-{{this.id}}" class="btn btn-primary" type="submit" style="display:none" >{{i18n 'Sauvegarder'}}</button>
                         <button type="button" class="btn btn-primary"  onclick="deleteUser({{this.id}})" >{{i18n 'Supprimer'}}</button>
                     </div>
                 </div>
@@ -62,16 +61,41 @@
 
     {{#*inline "scripts-block"}}
         <script>
+            // instead of using serializeArray, get form as an object
+            // thanks to https://www.helicaltech.com/get-form-data-as-an-object-using-jquery/
+            jQuery.fn.serializeObject = function(){
+                var results = {},
+                        arr = this.serializeArray();
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    obj = arr[i];
+                    //Check if results have a property with given name
+                    if (results.hasOwnProperty(obj.name)) {
+                        //Check if given object is an array
+                        if (!results[obj.name].push) {
+                            results[obj.name] = [results[obj.name]];
+                        }
+                        results[obj.name].push(obj.value || '');
+                    } else {
+                        results[obj.name] = obj.value || '';
+                    }
+                }
+                return results;
+            }
+        </script>
+        <script>
                 {{#each users}}
                 $('#user-{{this.id}}-role').val('{{this.role}}');
                 {{/each}}
         </script>
         <script>
-            // Prevent submit default event to update user
-            <!--$(`#user-{{this.id}}-form`).submit(function(e){-->
-                <!--e.preventDefault();-->
-                <!--updateUser({{this.id}}, this.form);-->
-            <!--});-->
+            $("form").submit(function(e){
+                // Prevent submit default event to update user
+                e.preventDefault();
+                // get user id through custom data-item attribute and serialize form to get informatons and update the user
+                updateUser($(this).attr("data-item"), $(this).serializeObject());
+            });
+
+
         </script>
         <script>
             /* Update user */
@@ -81,11 +105,11 @@
                 superagent.put('/users')
                         .send({
                             id: id,
-                            nom: form.lastname.value,
-                            prenom: form.firstname.value,
-                            email: form.email.value,
-                            password_clear : form.password.value,
-                            role: form.role.value
+                            nom: form.lastname,
+                            prenom: form.firstname,
+                            email: form.email,
+                            password_clear : form.password,
+                            role: form.role
                         })
                         .then(function(){
                             window.location.href = '/users'; // Reload users page
