@@ -28,7 +28,7 @@
             <div id="user-role-label" class="col-md-1">{{i18n 'Rôle'}}</div>
         </div>
         {{#each users}}
-            <form id="user-{{this.id}}-form" class="form-group" data-item="{{this.id}}"><!-- onsubmit="return updateUser({{this.id}}, this.form)"-->>
+            <form id="user-{{this.id}}-form" class="form-group" data-item="{{this.id}}">
                 <div class="form-group row">
                     <div id="user-{{this.id}}-id" class="col-md-1" />{{this.id}}</div>
                     <div class="col-md-2">
@@ -125,7 +125,7 @@
                         });
             }
 
-            /* Show save button, replace role field by dropdown list */
+            /* Show save button, hide edit button and make editable corresponding fields */
             function showForm(id) {
                 console.log("LOG : show edit button");
                 $(`#saveUserButton-${id}`).show();
