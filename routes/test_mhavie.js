@@ -19,7 +19,9 @@ router.get('/:code', function (req, res, next) {
         models.Question.max('number').then(max => {
             if(questionnaire.last_question > max)
             {
-                res.render('validation',{code:code,question:questionnaire.last_question - 1});
+                questionnaire.last_question = questionnaire.last_question-1;
+
+                // res.render('validation',{code:code,question:questionnaire.last_question - 1});
             }
         });
 

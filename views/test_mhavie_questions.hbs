@@ -92,6 +92,7 @@
                 satisfaction = $("[name='satisfaction']:checked").val();
                 $('#satisfactionInput').val(satisfaction);
 
+
             });
 
             //si "sans aide" est clické les autres aides sont désactivées
@@ -174,6 +175,10 @@
             if(questionNumber==1)
             {
                 $('#prev').prop("disabled", true);
+            }
+            if(questionNumber==20)
+            {
+                $('#next').prop("disabled", true);
             }
         </script>
 
