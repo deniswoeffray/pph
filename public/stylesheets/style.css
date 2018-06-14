@@ -6781,6 +6781,10 @@ administration, #add_user_form *, #user_list_labels *, #user_list *, #editable_f
   border-top-left-radius: 0;
   border-top-right-radius: 0; }
 
+.thead-primary {
+  background-color: #008481;
+  color: white; }
+
 .bg-dark {
   background-color: #008481 !important; }
 
