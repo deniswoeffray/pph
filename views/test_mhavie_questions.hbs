@@ -67,7 +67,7 @@
                 <div class="row">
 
                 <input id="valueInput" name="valueInput" type="hidden" value="">
-                <input id="satisfactionInput" name="satisfactionInput" type="hidden" value="">
+                <input id="satisfactionInput" name="satisfactionInput" type="hidden" value="0">
                 <div class="col-6">
                     <button class="btn btn-primary btn-block" id="prev" type="submit" name="next" value="-1">{{i18n 'Précédent'}}</button>
 
@@ -86,7 +86,6 @@
             //valeur pas défaut si rien répondu
             var value = -2;
             var satisfaction = -2;
-
             //valeur pas défaut si rien répondu
             $("[name='satisfaction']").click(function () {
                 satisfaction = $("[name='satisfaction']:checked").val();
