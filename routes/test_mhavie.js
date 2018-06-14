@@ -76,7 +76,6 @@ router.post('/:code/:question', function (req, res, next) {
         // création ou edition des valeurs des réponses selon si la question a déjà été répondue dans le questionnaire
         models.Question.findOne({where: {number: questionNb}}).then(function (question) {
 
-
             models.Reponse.findOrCreate({
                 where: {
                     questionnaire_id: questionnaire.id,
@@ -110,6 +109,7 @@ router.post('/', function (req, res, next) {
         date: new Date(),
         code: code
     }).then(function (questionnaire) {
+        //recherches des question et enregistrement pas defaut (afin de garder l'ordre et avoir des données pour le rapport)
         models.Question.findAll().then(function(questions){
             questions = questions;
             for(let q of questions)
@@ -135,6 +135,7 @@ module.exports = router;
 
 // méthode pour générer un code de 8 caractères de A-Z et 0-9 (moins 0 et O, I et 1 pour éviter la confusion)
 // 1 099 511 627 776 possibilités avec 8 caractères
+//si besoin on ajoute juste un numero au code
 function generateCode() {
     var text = "";
     var possible = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";

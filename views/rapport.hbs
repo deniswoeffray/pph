@@ -6,32 +6,39 @@
             </div>
             <div class="col-2">
                 <div class="text-right mt-2">
-                    <a href="/test/{{code}}"><button  class="btn-primary btn">{{i18n 'Test'}}</button></a>
+                    <a href="/test/{{code}}">
+                        <button class="btn-primary btn">{{i18n 'Test'}}</button>
+                    </a>
                 </div>
             </div>
         </div>
 
-
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="participation" data-toggle="tab" href="#participation-labels" role="tab" aria-controls="participation-labels" aria-selected="true">{{i18n 'Accueil'}}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="satisfaction" data-toggle="tab" href="#satisfaction-labels" role="tab" aria-controls="satisfaction-labels" aria-selected="false">{{i18n 'Profil'}}</a>
-                </li>
-            </ul>
-            <br>
+        <!--tabs pour changer de mode de vue dans le rapport-->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="participation" data-toggle="tab" href="#participation-labels" role="tab"
+                   aria-controls="participation-labels" aria-selected="true">{{i18n 'Accueil'}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="satisfaction" data-toggle="tab" href="#satisfaction-labels" role="tab"
+                   aria-controls="satisfaction-labels" aria-selected="false">{{i18n 'Profil'}}</a>
+            </li>
+        </ul>
+        <br>
         <div class="row">
             <div class="col-3">
+                <!--legendes selon mode de vue dans le rapport-->
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="participation-labels" role="tabpanel" aria-labelledby="participation-tab">
+                    <div class="tab-pane fade show active" id="participation-labels" role="tabpanel"
+                         aria-labelledby="participation-tab">
                         <div class="legend green"></div> {{i18n 'Bonne participation'}}  <br>
                         <div class="legend orange"></div> {{i18n 'Moyenne participation'}} <br>
                         <div class="legend red"></div> {{i18n 'Faible participation'}} <br>
                         <div class="legend lightblue"></div> {{i18n 'Non réalisé'}} <br>
                         <div class="legend gray"></div> {{i18n 'Non applicable'}}<br>
                     </div>
-                    <div class="tab-pane fade" id="satisfaction-labels" role="tabpanel" aria-labelledby="satisfaction-tab">
+                    <div class="tab-pane fade" id="satisfaction-labels" role="tabpanel"
+                         aria-labelledby="satisfaction-tab">
                         <div class="legend green"></div> {{i18n 'Satisfait'}}<br>
                         <div class="legend orange"></div> {{i18n '+/- satisfait'}}<br>
                         <div class="legend red"></div> {{i18n 'Pas satisfait'}}<br>
@@ -50,20 +57,21 @@
 
         <script>
             var data = [];
+            //créé un tableau de categories uniques (sans doublons)
             data.categories = [];
-
                 {{#each reponses}}
+                //test si la categorie existe pas
                 if (data.categories.indexOf("{{this.Question.Categorie.name}}") == -1) {
                     data.categories.push("{{this.Question.Categorie.name}}");
                 }
                 {{/each}}
-
+            //initiation des valeurs par categorie
             data.categoriesValues = [];
+            //initiation des satisfactions par categorie
             satisfactionValues = [];
                 {{#each reponses}}
                 //if the category is empty of values
-                if(data.categoriesValues[data.categories.indexOf("{{this.Question.Categorie.name}}")] == undefined)
-                {
+                if (data.categoriesValues[data.categories.indexOf("{{this.Question.Categorie.name}}")] == undefined) {
                     //new array for this category
                     data.categoriesValues[data.categories.indexOf("{{this.Question.Categorie.name}}")] = [];
                     satisfactionValues[data.categories.indexOf("{{this.Question.Categorie.name}}")] = [];
@@ -73,98 +81,92 @@
                 satisfactionValues[data.categories.indexOf("{{this.Question.Categorie.name}}")].push({{this.satisfaction}});
                 {{/each}}
 
+            //init color array for the chart
             var colors = [];
+            //init the final values for the chart (this array contain the unique value even if the categorie has 2 questions)
             var finalValues = [];
 
-            for(let t of data.categoriesValues)
-            {
-                if(t.length==1)
-                {
-                    if(t[0]==-2)
-                    {
+            for (let t of data.categoriesValues) {
+                //if unique question for a category
+                if (t.length == 1) {
+                    if (t[0] == -2) {
                         finalValues.push(0);
                         colors.push("grey");
 
                     }
-                    else if(t[0]==0)
-                    {
+                    else if (t[0] == 0) {
                         finalValues.push(-1)
                         colors.push("lightblue");
                     }
-                    else if(t[0]==-1)
-                    {
+                    else if (t[0] == -1) {
                         finalValues.push(-1);
                         colors.push("grey");
                     }
-                    else
-                    {
+                    else {
                         finalValues.push(t[0]);
                         colors.push(getColor(t[0]));
                     }
                 }
-                else
-                {
-                    if(t[0]==-1 && t[1]==-1) // N/A + N/A
+                //else id tw0 question for a category
+
+                else {
+                    if (t[0] == -1 && t[1] == -1) // N/A + N/A
                     {
                         finalValues.push(-1);
                         colors.push("grey")
                     }
 
-                    else if(t[0]==0 && t[1]==0) // Non réalisé + Non réalisé
+                    else if (t[0] == 0 && t[1] == 0) // Non réalisé + Non réalisé
                     {
                         finalValues.push(-1);
                         colors.push("lightblue")
                     }
-                    else if((t[0]==-1 && t[1]==0) || (t[1]==-1 && t[0]==0)) // N/A + non réalisé
+                    else if ((t[0] == -1 && t[1] == 0) || (t[1] == -1 && t[0] == 0)) // N/A + non réalisé
                     {
                         finalValues.push(-1);
                         colors.push("lightblue")
                     }
-                    else if((t[0]==-1 && t[1]>0) || (t[1]==-1 && t[0]>0)) // N/A + autre
+                    else if ((t[0] == -1 && t[1] > 0) || (t[1] == -1 && t[0] > 0)) // N/A + autre
                     {
                         let val;
-                        if(t[0]>0)
-                        {
-                            val=t[0];
+                        if (t[0] > 0) {
+                            val = t[0];
                         }
-                        else
-                        {
-                            val=t[1];
+                        else {
+                            val = t[1];
                         }
                         finalValues.push(val);
                         colors.push(getColor(val));
                     }
 
-                    else if((t[0] == -2 && t[1] == -1) || (t[1] == -2 && t[0] == -1)) // pas de répone + N/A
+                    else if ((t[0] == -2 && t[1] == -1) || (t[1] == -2 && t[0] == -1)) // pas de répone + N/A
                     {
                         finalValues.push(0);
                         colors.push("grey");
                     }
-                    else if((t[0] == -2 && t[1] == 0) || (t[1] == -2 && t[0] == 0)) // pas de répone + Non réalisé
+                    else if ((t[0] == -2 && t[1] == 0) || (t[1] == -2 && t[0] == 0)) // pas de répone + Non réalisé
                     {
                         finalValues.push(-1);
                         colors.push("lightblue");
                     }
 
-                    else if((t[0] == -2 && t[1] > 0) || (t[1] == -2 && t[0] > 0)) // pas de réponse + autre
+                    else if ((t[0] == -2 && t[1] > 0) || (t[1] == -2 && t[0] > 0)) // pas de réponse + autre
                     {
                         let val;
-                        if(t[0]>0)
-                        {
-                            val=t[0]
+                        if (t[0] > 0) {
+                            val = t[0]
                         }
-                        else
-                        {
-                            val=t[1]
+                        else {
+                            val = t[1]
                         }
                         finalValues.push(val);
                         colors.push(getColor(val));
                     }
 
-                    else if(t[0]>=0 && t[1]>=0) // autre
+                    else if (t[0] >= 0 && t[1] >= 0) // autre
                     {
-                        finalValues.push((t[0]+t[1])/2);
-                        colors.push(getColor((t[0]+t[1])/2))
+                        finalValues.push((t[0] + t[1]) / 2);
+                        colors.push(getColor((t[0] + t[1]) / 2))
                     }
 
                     else // pas de réponse + pas de réponse
@@ -178,40 +180,35 @@
 
             var satisfactionColors = [];
 
-            for(let s of satisfactionValues)
-            {
-                if(s.length==1)
-                {
+            for (let s of satisfactionValues) {
+                if (s.length == 1) {
 
-                        satisfactionColors.push(getSatisfactionColor(s[0]))
+                    satisfactionColors.push(getSatisfactionColor(s[0]))
 
                 }
-                else
-                {
-                    if(s[0]==s[1]) // valeurs identiques
+                else {
+                    if (s[0] == s[1]) // valeurs identiques
                     {
                         satisfactionColors.push(getSatisfactionColor(s[0]))
                     }
-                    else if(s[0]==0 || s[1]==0) // un des deux n'est pas défini
+                    else if (s[0] == 0 || s[1] == 0) // un des deux n'est pas défini
                     {
-                        if(s[0]==0)
-                        {
+                        if (s[0] == 0) {
                             satisfactionColors.push(getSatisfactionColor(s[1]))
                         }
-                        else
-                        {
+                        else {
                             satisfactionColors.push(getSatisfactionColor(s[0]))
                         }
                     }
-                    else if((s[0]==1 && s[1]==2) || (s[0]==2 && s[1]==1)) // pas satisfait + plus ou moins satisfait
+                    else if ((s[0] == 1 && s[1] == 2) || (s[0] == 2 && s[1] == 1)) // pas satisfait + plus ou moins satisfait
                     {
                         satisfactionColors.push("red")
                     }
-                    else if((s[0]==1 && s[1]==3) || (s[0]==3 && s[1]==1)) // pas satisfait +  satisfait
+                    else if ((s[0] == 1 && s[1] == 3) || (s[0] == 3 && s[1] == 1)) // pas satisfait +  satisfait
                     {
                         satisfactionColors.push("orange")
                     }
-                    else if((s[0]==2 && s[1]==3) || (s[0]==3 && s[1]==2)) // plus ou moins satisfait +  satisfait
+                    else if ((s[0] == 2 && s[1] == 3) || (s[0] == 3 && s[1] == 2)) // plus ou moins satisfait +  satisfait
                     {
                         satisfactionColors.push("green")
                     }
@@ -224,8 +221,8 @@
 
             }
 
-
-            function getColor (v) {
+            //return the good color for the value
+            function getColor(v) {
                 if (v < 0) {
                     return 'grey';
                 }
@@ -241,8 +238,9 @@
                     return 'green';
                 }
             }
+            //return the good color for the satisfaction
 
-            function getSatisfactionColor (v) {
+            function getSatisfactionColor(v) {
                 if (v == 0) {
                     return 'grey';
                 }
@@ -260,6 +258,7 @@
             }
 
 
+            //chart definition
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
@@ -274,17 +273,17 @@
                     }]
                 },
                 options: {
-                    responsive:true,
-                    legend:{
-                        display:false
+                    responsive: true,
+                    legend: {
+                        display: false
                     },
                     scales: {
                         yAxes: [{
                             ticks: {
                                 autoSkip: false,
                                 beginAtZero: true,
-                                min:-1,
-                                max:9
+                                min: -1,
+                                max: 9
                             }
                         }],
                         xAxes: [{
@@ -299,12 +298,12 @@
 
         </script>
         <script>
+            //set the good color for the different chart modes
             $('#satisfaction').click(function () {
                 myChart.data.datasets[0].backgroundColor = satisfactionColors;
                 myChart.data.datasets[0].borderColor = satisfactionColors;
                 myChart.update();
             });
-
             $('#participation').click(function () {
 
                 myChart.data.datasets[0].backgroundColor = colors;
