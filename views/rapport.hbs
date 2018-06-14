@@ -1,6 +1,17 @@
 {{#> baseLayout }}
     {{#*inline "content-block"}}
-        <h1 class="mb-4">{{i18n 'Rapport'}} - {{code}}</h1>
+        <div class="row">
+            <div class="col-10">
+                <h1 class="mb-4">{{i18n 'Rapport'}} - {{code}}</h1>
+            </div>
+            <div class="col-2">
+                <div class="text-right mt-2">
+                    <a href="/test/{{code}}"><button  class="btn-primary btn">{{i18n 'Test'}}</button></a>
+                </div>
+            </div>
+        </div>
+
+
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="participation" data-toggle="tab" href="#participation-labels" role="tab" aria-controls="participation-labels" aria-selected="true">{{i18n 'Accueil'}}</a>
