@@ -20,7 +20,7 @@ router.post('/',(req, res, next) => {
         role: req.body.role
     }).then(() => {
         console.log('LOG : user successfully added ');
-        res.redirect('/users');
+        res.redirect(global.prefix+'users');
     })
 });
 
@@ -55,13 +55,22 @@ router.put('/', (req, res, next) => {
 
 /* DELETE user */
 router.delete('/:id', (req, res, next) => {
-
-    models.User.destroy({
-        where : {id:  req.params.id}
-    }).then((nbRows) => {
-        res.send("user removed");
-        console.log('LOG : user successfully removed ');
-    });
+    // Current user cannot be removed
+    if(req.session.user.id === parseInt(req.params.id))
+    {
+        console.log('LOG : current user cannot be removed ');
+        req.flash('error', i18n.__('L\'utilisateur actuellement connecté ne peut être supprimé'));
+        res.redirect(global.prefix+'users');
+    }
+    else
+    {
+        models.User.destroy({
+            where : {id:  req.params.id}
+        }).then((nbRows) => {
+            res.send("user removed");
+            console.log('LOG : user successfully removed ');
+        });
+    }
 })
 
 module.exports = router;

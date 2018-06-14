@@ -29,6 +29,11 @@
         </div>
         {{#each users}}
             <form id="user-{{this.id}}-form" class="form-group" data-item="{{this.id}}">
+                {{#if messages.error}}
+                    <div class="alert alert-danger" role="alert">
+                        {{messages.error}}
+                    </div>
+                {{/if}}
                 <div class="form-group row">
                     <div id="user-{{this.id}}-id" class="col-md-1" />{{this.id}}</div>
                     <div class="col-md-2">
