@@ -6,6 +6,16 @@ var i18n = require ('i18n');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    //TODO delete these lines after development
+    models.User.findOrCreate({
+        where:{nom:'admin'},
+        defaults: {nom: 'admin', prenom:'admin', email:'admin@admin.loc', password_clear:'pph12345',role:'admin'}
+    }).spread(function (user,created){
+        if(created) {
+            console.log("ADMIN CREATED");
+        }
+    })
+
     res.render('login', { title: 'Connexion' });
 });
 
