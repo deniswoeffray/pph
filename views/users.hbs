@@ -28,7 +28,7 @@
             <div id="user-role-label" class="col-md-1">{{i18n 'Rôle'}}</div>
         </div>
         {{#each users}}
-            <form id="user-{{this.id}}-form" class="form-group" data-item="{{this.id}}">
+            <form id="user-{{this.id}}-form" class="form-group userforms" data-item="{{this.id}}">
                 {{#if messages.error}}
                     <div class="alert alert-danger" role="alert">
                         {{messages.error}}
@@ -93,7 +93,7 @@
                 {{/each}}
         </script>
         <script>
-            $('#user-{{this.id}}-form').submit(function(e){
+            $('.userforms').submit(function(e){
                 // Prevent submit default event to update user
                 e.preventDefault();
                 // get user id through custom data-item attribute and serialize form to get informatons and update the user
