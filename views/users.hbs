@@ -93,7 +93,7 @@
                 {{/each}}
         </script>
         <script>
-            $("form").submit(function(e){
+            $('#user-{{this.id}}-form').submit(function(e){
                 // Prevent submit default event to update user
                 e.preventDefault();
                 // get user id through custom data-item attribute and serialize form to get informatons and update the user
