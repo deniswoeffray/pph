@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-12">
                 <!--Post vers la création de formulaire-->
-                <form action="/test" method="post">
+                <form action="test" method="post">
                     <button class="btn btn-primary" type="submit">{{i18n 'Créer un nouveau test'}}</button>
                 </form>
             </div>
@@ -82,7 +82,7 @@
                     // Get vers la recherche de formulaire
                     else
                     {
-                        window.location.href = '/test/'+$('#testCode').val();
+                        window.location.href = 'test/'+$('#testCode').val();
                     }
                 });
 

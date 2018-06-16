@@ -34,7 +34,7 @@ router.post('/', function(req, res, next) {
                     // redirection vers page index
                     req.session.user = user;
                     req.session.authenticated = true;
-                    res.redirect('/');
+                    res.redirect(global.prefix);
                 } else {
                     // Passwords don't match
                     req.flash('error', i18n.__('Mot de passe incorrect'));

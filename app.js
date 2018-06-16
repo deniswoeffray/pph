@@ -18,7 +18,7 @@ var rapportRouter = require('./routes/rapport');
 var rapportTableRouter = require('./routes/rapportTable');
 
 var app = express();
-global.prefix = (process.env.PREFIX) || "/";
+global.prefix = (process.env.PREFIX) || "/grp13/";
 
 i18n.configure({
     locales:['en', 'fr'],

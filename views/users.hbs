@@ -2,7 +2,7 @@
 
     {{#*inline "content-block"}}
         <h1>{{i18n 'Console d\'administration'}}</h1>
-        <form class= "form-group" action='/users' method='POST'>
+        <form class= "form-group" action='users' method='POST'>
             <h3>{{i18n 'Ajouter un utilisateur'}}</h3>
             <div id="add_user_form" class="row">
                 <input name="lastname" class="col-md-2 form-control" type="text" placeholder="{{i18n 'Nom de famille'}}" required/>
@@ -108,7 +108,7 @@
             function updateUser(id, form) {
                 // Call PUT for updating the user
                 console.log("updateUser");
-                superagent.put('/users')
+                superagent.put('users')
                         .send({
                             id: id,
                             nom: form.lastname,
@@ -118,7 +118,7 @@
                             role: form.role
                         })
                         .then(function(){
-                            window.location.href = '/users'; // Reload users page
+                            window.location.href = 'users'; // Reload users page
                         });
             }
 
@@ -127,9 +127,9 @@
                 var r = confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur?");
                 if (r == true) {
                     // Call DELETE for removing the user
-                    superagent.delete(`/users/${id}`) // Delete current user
+                    superagent.delete(`users/${id}`) // Delete current user
                             .then(() => {
-                                window.location.href = '/users'; // Reload users page
+                                window.location.href = 'users'; // Reload users page
                             });
                 } else {
                     // Do nothing
