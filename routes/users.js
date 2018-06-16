@@ -1,12 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var i18n = require ('i18n');
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
     models.User.findAll().then((users) => {
         res.render('users', {users: users});
         console.log('LOG : users successfully loaded ');
+    }).catch(function (err) {
+        res.status(err.status || 500);
+        res.render(global.prefix+'error');
     });
 });
 
@@ -21,7 +25,10 @@ router.post('/',(req, res, next) => {
     }).then(() => {
         console.log('LOG : user successfully added ');
         res.redirect(global.prefix+'users');
-    })
+    }).catch(function (err) {
+        res.status(err.status || 500);
+        res.render(global.prefix+'error');
+    });
 });
 
 /* PUT to update user */
@@ -37,7 +44,10 @@ router.put('/', (req, res, next) => {
             }).then(function () {
                 console.log("password not modified");
                 res.send("user updated");
-            })
+            }).catch(function (err) {
+                res.status(err.status || 500);
+                res.render(global.prefix+'error');
+            });
         } else {
             user.update({
                 nom: req.body.nom,
@@ -48,7 +58,10 @@ router.put('/', (req, res, next) => {
             }).then(function(){
                 console.log("password modified");
                 res.send("user updated");
-            })
+            }).catch(function (err) {
+                res.status(err.status || 500);
+                res.render(global.prefix+'error');
+            });
         }
     })
 });
@@ -61,6 +74,7 @@ router.delete('/:id', (req, res, next) => {
         req.flash('no_delete', i18n.__('L\'utilisateur actuellement connecté ne peut être supprimé'));
         console.log('LOG : current user cannot be removed ');
         res.redirect(global.prefix+'users');
+        res.send("user not removed");
     }
     else
     {
@@ -69,6 +83,9 @@ router.delete('/:id', (req, res, next) => {
         }).then((nbRows) => {
             res.send("user removed");
             console.log('LOG : user successfully removed ');
+        }).catch(function (err) {
+            res.status(err.status || 500);
+            res.render(global.prefix+'error');
         });
     }
 })
