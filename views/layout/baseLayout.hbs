@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="/stylesheets/style.css">
+        <link rel="stylesheet" href="stylesheets/style.css">
         {{#> scripts-css}}
         {{!-- Custom css per page can be added. --}}
         {{/scripts-css}}
@@ -18,13 +18,13 @@
                 <ul class="navbar-nav mr-auto">
                 {{#if @isAdmin}}
                     <li class="nav-item">
-                            <a class="nav-link" href="/users">{{i18n 'Administration'}}</a>
+                            <a class="nav-link" href="users">{{i18n 'Administration'}}</a>
                     </li>
                 {{/if}}
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">{{i18n 'Se déconnecter'}}</a>
+                        <a class="nav-link" href="logout">{{i18n 'Se déconnecter'}}</a>
                     </li>
                 </ul>
             </nav>
