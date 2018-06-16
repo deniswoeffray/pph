@@ -58,8 +58,8 @@ router.delete('/:id', (req, res, next) => {
     // Current user cannot be removed
     if(req.session.user.id === parseInt(req.params.id))
     {
+        req.flash('no_delete', i18n.__('L\'utilisateur actuellement connecté ne peut être supprimé'));
         console.log('LOG : current user cannot be removed ');
-        req.flash('error', i18n.__('L\'utilisateur actuellement connecté ne peut être supprimé'));
         res.redirect(global.prefix+'users');
     }
     else

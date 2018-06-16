@@ -19,6 +19,11 @@
         </form>
 
         <h3>{{i18n 'Liste des utilisateurs'}}</h3>
+        {{#if messages.error}}
+            <div class="alert alert-danger" role="alert">
+                {{messages.error}}
+            </div>
+        {{/if}}
         <div class="row" id="user_list_labels">
             <div id="user-id-label" class="col-md-1">{{i18n 'Id'}}</div>
             <div id="user-nom-label" class="col-md-2">{{i18n 'Nom'}}</div>
@@ -29,11 +34,7 @@
         </div>
         {{#each users}}
             <form id="user-{{this.id}}-form" class="form-group userforms" data-item="{{this.id}}">
-                {{#if messages.error}}
-                    <div class="alert alert-danger" role="alert">
-                        {{messages.error}}
-                    </div>
-                {{/if}}
+
                 <div class="form-group row">
                     <div id="user-{{this.id}}-id" class="col-md-1" />{{this.id}}</div>
                     <div class="col-md-2">
@@ -123,11 +124,17 @@
 
             /* Delete user */
             function deleteUser(id) {
-                // Call DELETE for removing the user
-                superagent.delete(`/users/${id}`) // Delete current user
-                        .then(() => {
-                            window.location.href = '/users'; // Reload users page
-                        });
+                var r = confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur?");
+                if (r == true) {
+                    // Call DELETE for removing the user
+                    superagent.delete(`/users/${id}`) // Delete current user
+                            .then(() => {
+                                window.location.href = '/users'; // Reload users page
+                            });
+                } else {
+                    // Do nothing
+                }
+
             }
 
             /* Show save button, hide edit button and make editable corresponding fields */
