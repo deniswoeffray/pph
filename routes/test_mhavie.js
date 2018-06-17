@@ -89,11 +89,20 @@ router.post('/:code/:question', function (req, res, next) {
                     response.value = value;
                     response.satisfaction = satisfaction;
                     response.save({fields: ['value', 'satisfaction']}).then(function (e) {
+                        if(Number(next)===0)
+                        {
+                            res.redirect(global.prefix+'rapport/' + code);
+                        }
                         res.redirect(global.prefix+'test/' + code);
                     })
                 }
                 else
                 {
+
+                    if(Number(next)===0)
+                    {
+                        res.redirect(global.prefix+'rapport/' + code);
+                    }
                     res.redirect(global.prefix+'test/' + code);
                 }
 

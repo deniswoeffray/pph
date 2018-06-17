@@ -73,8 +73,14 @@
 
                 </div>
                 <div class="col-6">
-                    <button class="btn btn-primary btn-block" type="submit" name="next" value="1" id="next">{{i18n 'Suivant'}}</button>
+                    <div>
+                        <button class="btn btn-primary btn-block" type="submit" name="next" value="1" id="next">{{i18n 'Suivant'}}</button>
 
+                    </div>
+                    <div>
+                        <button class="btn btn-primary btn-block" type="submit" name="next" value="0" id="finish">{{i18n 'Terminer'}}</button>
+
+                    </div>
                 </div>
                 </div>
 
@@ -83,6 +89,7 @@
 
     {{#*inline "scripts-block"}}
         <script>
+            $('#finish').hide();
             //valeur pas défaut si rien répondu
             var value = -2;
             var satisfaction = -2;
@@ -177,7 +184,8 @@
             }
             if(questionNumber==20)
             {
-                $('#next').prop("disabled", true);
+                $('#next').hide();
+                $('#finish').show();
             }
         </script>
 

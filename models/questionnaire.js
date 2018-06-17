@@ -3,7 +3,7 @@ var Reponse = require('../models/reponse');
 module.exports = (sequelize, DataTypes) => {
     const Questionnaire = sequelize.define('Questionnaire', {
         id: {type:DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-        code: {type:DataTypes.STRING, unique: true},
+        code: {type:DataTypes.STRING(8), unique: true, },
         date: DataTypes.DATE,
         last_question: {type: DataTypes.INTEGER, defaultValue: 1},
         finished: {type: DataTypes.BOOLEAN, defaultValue: false}

@@ -10,6 +10,7 @@ router.get('/:code', function(req, res, next) {
   //find questionnaire
      models.Questionnaire.findOne({where:{code:code}}).then(function (questionnaire) {
 
+
         models.Reponse.findAll({where:{questionnaire_id:questionnaire.id}, include:[{model:models.Question, include:[{model:models.Categorie}]}]}).then(function (reponses) {
              res.render('rapportTable', {code:questionnaire.code, reponses:reponses});
            })

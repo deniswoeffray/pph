@@ -1,6 +1,4 @@
 {
-
-
   "development": {
     "username": "root",
     "password": null,
@@ -18,11 +16,11 @@
     "operatorsAliases": false
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "pph",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+        "username": "grp13",
+        "password": "Italie1986",
+        "database": "grp13",
+        "host": "localhost",
+        "dialect": "mysql",
+        "operatorsAliases": false
   }
 }
